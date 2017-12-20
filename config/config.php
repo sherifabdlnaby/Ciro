@@ -8,5 +8,5 @@ Config::set('default_action', 'index');
 //Routes
 Config::set('routes', array(
     'default' => '',
-    'admin' => 'admin'
+    'admin' => 'admin_'
 ));

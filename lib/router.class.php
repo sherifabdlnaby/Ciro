@@ -6,7 +6,6 @@ class Router{
     protected $action;
     protected $params;
     protected $route;
-
     protected $route_prefix;
 
     /**
@@ -31,10 +30,34 @@ class Router{
         //Get URL without GET parms
         $uri_path = $uri_parts[0];
 
+        //Get Path Parts
         $path_parts = explode('/', $uri_path);
 
-        echo "<pre>"; print_r($path_parts);
+        if(count($path_parts))
+        {
+            //Get Route from first part if exits
+            if( in_array(strtolower(current($path_parts)), array_keys($routes))){
+                $this->route = strtolower(current($path_parts));
+                $this->route_prefix = isset($routes[$this->route]) ? $routes[$this->route] : "";
+                array_shift($path_parts);
+            }
 
+            //Get Controller
+            if( current($path_parts) ){
+                $this->controller = strtolower(current($path_parts));
+                array_shift($path_parts);
+            }
+
+            //Get Action
+            if( current($path_parts) ){
+                $this->action = strtolower(current($path_parts));
+                array_shift($path_parts);
+            }
+
+            //Get Params
+            $this -> params = $path_parts;
+
+        }
     }
 
 
@@ -100,6 +123,38 @@ class Router{
     public function setParams($params)
     {
         $this->params = $params;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param string $route
+     */
+    public function setRoute(string $route)
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoutePrefix(): string
+    {
+        return $this->route_prefix;
+    }
+
+    /**
+     * @param string $route_prefix
+     */
+    public function setRoutePrefix(string $route_prefix)
+    {
+        $this->route_prefix = $route_prefix;
     }
 
 }
