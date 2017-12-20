@@ -128,7 +128,7 @@ class Router{
     /**
      * @return string
      */
-    public function getRoute(): string
+    public function getRoute()
     {
         return $this->route;
     }
@@ -144,7 +144,7 @@ class Router{
     /**
      * @return string
      */
-    public function getRoutePrefix(): string
+    public function getRoutePrefix()
     {
         return $this->route_prefix;
     }

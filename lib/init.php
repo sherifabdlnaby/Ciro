@@ -1,6 +1,9 @@
 <?php
 
+//Init Config
 require_once(ROOT.DS.'config'.DS.'config.php');
+//Init DB
+require_once(ROOT.DS.'config'.DS.'mongo.php');
 
 /**
  * @param $class_name
