@@ -24,11 +24,20 @@ class App{
             $controllerObject = new $controllerClass();
 
         //Check if Controller and Action Exists in our code
-        if(method_exists($controllerObject, $controllerMethod))
+        if(method_exists($controllerObject, $controllerMethod)) {
             //RUN
-            $controllerObject -> $controllerMethod();
-        else
-            throw new Exception('Method: "'.$controllerMethod.'" or Controller: "'.$controllerClass.'" Doesn\'t Exist.');
+            $viewPath = $controllerObject->$controllerMethod();
+            $viewObj = new View($controllerObject -> getData(), $viewPath);
+            $content = $viewObj -> render();
+        }
+        else {
+            throw new Exception('Method: "' . $controllerMethod . '" or Controller: "' . $controllerClass . '" Doesn\'t Exist.');
             //TODO Redirect to 404 page b2a wala 7aga.
+        }
+
+        $layout = self::$router->getRoute();
+        $layoutPath = VIEW_PATH.DS.$layout.'.html';
+        $layoutView = new View(compact('content'), $layoutPath);
+        echo $layoutView -> render();
     }
 }
