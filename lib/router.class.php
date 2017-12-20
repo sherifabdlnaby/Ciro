@@ -5,6 +5,9 @@ class Router{
     protected $controller;
     protected $action;
     protected $params;
+    protected $route;
+
+    protected $route_prefix;
 
     /**
      * Router constructor.
@@ -12,9 +15,26 @@ class Router{
      */
     public function __construct($uri)
     {
-        $this->uri = $uri;
-        //TODO Route Parsing
-        print_r("Hello from the router side");
+        $this->uri = urldecode(trim($uri,'/'));
+
+        //Load Defaults
+        $routes = Config::get('routes');
+        $this -> route = Config::get('default_route');
+        $this -> route_prefix = isset($routes[$this -> route]) ? $routes[$this -> route] : '';
+        $this -> controller = Config::get('default_controller');
+        $this -> action = Config::get('default_action');
+
+        //Parse
+
+        $uri_parts = explode('?', $this->uri);
+
+        //Get URL without GET parms
+        $uri_path = $uri_parts[0];
+
+        $path_parts = explode('/', $uri_path);
+
+        echo "<pre>"; print_r($path_parts);
+
     }
 
 
