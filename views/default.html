@@ -5,8 +5,8 @@
     <title><?= Config::get('site_name')?></title>
 </head>
 <body>
-        <h1>HEADER</h1>
+        <?= $data['header'] ?>
         <?= $data['content'] ?>
-        <h2>FOOTER</h2>
+        <?= $data['footer'] ?>
 </body>
 </html>
