@@ -29,31 +29,8 @@ class App{
             $controllerObject->$controllerMethod();
             exit();
         }
-
-        //TODO Better Redirect method by my framework
-        //404 for now (kinda hardcoded :'D (for-now) )
-        $errorMessage = '404 NOT-FOUND';
-        $viewPath = VIEW_PATH.DS.'Err'.DS.'notfound.html';
-
-        //Render Body
-        $viewObj = new View(compact('errorMessage'), $viewPath);
-        $content = $viewObj -> render();
-
-        ///Prepare Layout
-        $layout = self::$router->getRoute();
-        $layoutHeaderPath = VIEW_PATH.DS.$layout.'.header.html';
-        $layoutFooterPath = VIEW_PATH.DS.$layout.'.footer.html';
-
-        //Render Header / Footer
-        $headerObj = new View(array(), $layoutHeaderPath);
-        $footerObj = new View(array(), $layoutFooterPath);
-        $header = $headerObj->render();
-        $footer = $footerObj->render();
-
-        //Render Layout
-        $layoutPath = VIEW_PATH.DS.$layout.'.html';
-        $layoutView = new View(compact('content', 'header', 'footer'), $layoutPath);
-        echo $layoutView -> render();
-        exit();
+        //SEND 404
+        $Error = new ErrController(404);
+        $Error -> SendAndRenderError();
     }
 }

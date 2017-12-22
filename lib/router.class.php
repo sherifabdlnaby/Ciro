@@ -60,7 +60,6 @@ class Router{
         }
     }
 
-
     /**
      * @return mixed
      */
@@ -136,7 +135,7 @@ class Router{
     /**
      * @param string $route
      */
-    public function setRoute(string $route)
+    public function setRoute($route)
     {
         $this->route = $route;
     }
@@ -152,7 +151,7 @@ class Router{
     /**
      * @param string $route_prefix
      */
-    public function setRoutePrefix(string $route_prefix)
+    public function setRoutePrefix($route_prefix)
     {
         $this->route_prefix = $route_prefix;
     }
