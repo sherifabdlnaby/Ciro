@@ -26,26 +26,7 @@ class App{
         //Check if Controller and Action Exists in our code
         if(method_exists($controllerObject, $controllerMethod)) {
             //RUN Controller
-            $viewPath = $controllerObject->$controllerMethod();
-            //Render Body
-            $viewObj = new View($controllerObject -> getData(), $viewPath);
-            $content = $viewObj -> render();
-
-            ///Prepare Layout
-            $layout = self::$router->getRoute();
-            $layoutHeaderPath = VIEW_PATH.DS.$layout.'.header.html';
-            $layoutFooterPath = VIEW_PATH.DS.$layout.'.footer.html';
-
-            //Render Header / Footer
-            $headerObj = new View(array(), $layoutHeaderPath);
-            $footerObj = new View(array(), $layoutFooterPath);
-            $header = $headerObj->render();
-            $footer = $footerObj->render();
-
-            //Render Layout
-            $layoutPath = VIEW_PATH.DS.$layout.'.html';
-            $layoutView = new View(compact('content', 'header', 'footer'), $layoutPath);
-            echo $layoutView -> render();
+            $controllerObject->$controllerMethod();
             exit();
         }
 

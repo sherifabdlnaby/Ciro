@@ -41,4 +41,33 @@ class Controller{
         return $this->params;
     }
 
+
+    function render($viewPath = null){
+        //Render Body
+        $viewObj = new View($this ->data, $viewPath);
+        $content = $viewObj -> render();
+
+        ///Prepare Layout
+        $layout = App::getRouter() -> getRoute();
+        $layoutHeaderPath = VIEW_PATH.DS.$layout.'.header.html';
+        $layoutFooterPath = VIEW_PATH.DS.$layout.'.footer.html';
+
+        //Render Header / Footer
+        $headerObj = new View(array(), $layoutHeaderPath);
+        $footerObj = new View(array(), $layoutFooterPath);
+        $header = $headerObj->render();
+        $footer = $footerObj->render();
+
+        //Render Layout
+        $layoutPath = VIEW_PATH.DS.$layout.'.html';
+        $layoutView = new View(compact('content', 'header', 'footer'), $layoutPath);
+        echo $layoutView -> render();
+        exit();
+    }
+    function redirect($path)
+    {
+        header("Location: ".$path);
+        exit();
+    }
+
 }
