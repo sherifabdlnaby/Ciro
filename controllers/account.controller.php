@@ -1,6 +1,10 @@
 <?php
 
 class AccountController extends Controller{
+    public function index(){
+        $this->redirect('/');
+    }
+
     public function login(){
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //load data
@@ -69,7 +73,27 @@ class AccountController extends Controller{
         $this->redirect('/');
     }
 
-    public function index(){
-        $this -> data['test_content'] = 1337;
+    public function view(){
+        //QueryDB
+        $collection = Database::getCollection("Users");
+        $query = $collection -> find(array("username" => $this ->params[0]));
+        $queryArray = iterator_to_array($query);
+
+        //Compare Information
+        if(count($queryArray) == 1)
+        {
+            $user = &current($queryArray);
+            $this -> data['username'] = $user['username'];
+            $this -> data['name'] = $user['name'];
+            $this -> data['email'] = $user['email'];
+            $this -> data['phoneNumber'] = $user['phoneNumber'];
+            $this->render();
+        }
+        else{
+            $Error = new ErrController(404);
+            $Error -> SendAndRenderError();
+        }
     }
+
+
 }
