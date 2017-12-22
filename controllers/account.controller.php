@@ -64,7 +64,9 @@ class AccountController extends Controller{
     }
 
     public function logout(){
-        $this -> data['test_content'] = 1337;
+        session_unset();
+        session_destroy();
+        $this->redirect('/');
     }
 
     public function index(){
