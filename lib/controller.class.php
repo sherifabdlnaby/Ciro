@@ -69,5 +69,10 @@ class Controller{
         header("Location: ".$path);
         exit();
     }
-
+    function addError($error)
+    {
+        if(!isset($this->data['errorMessages']))
+            $this -> data['errorMessages'] = array();
+        array_push($this->data['errorMessages'], $error);
+    }
 }
