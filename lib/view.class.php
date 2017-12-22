@@ -38,6 +38,13 @@ class View{
         $data = $this -> data;
 
         ob_start();
+        if(isset($data['errorMessages']))
+        {
+            //Render Errors
+            include(VIEW_PATH.DS.'default.error.html');
+            //Clean
+            unset($data['errorMessages']);
+        }
         include($this -> path);
         $content = ob_get_clean();
 
