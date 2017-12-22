@@ -7,8 +7,6 @@ define('VIEW_PATH', ROOT.DS.'views');
 //INITIALIZE
 require_once(ROOT.DS.'lib'.DS.'init.php');
 
-$collection = Database::getCollection("Users");
-
 try {
     App::run($_SERVER["REQUEST_URI"]);
 }
