@@ -2,7 +2,12 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
+define('CONFIG_PATH', ROOT.DS.'config');
+define('LIBRARY_PATH', ROOT.DS.'lib');
+define('MODEL_PATH', ROOT.DS.'models');
 define('VIEW_PATH', ROOT.DS.'views');
+define('CONTROLLER_PATH', ROOT.DS.'controllers');
+define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_errors');
 
 //INITIALIZE
 require_once(ROOT.DS.'lib'.DS.'init.php');

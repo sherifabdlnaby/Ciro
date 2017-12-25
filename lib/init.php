@@ -1,10 +1,10 @@
 <?php
 
 //Init Config
-require_once(ROOT.DS.'config'.DS.'config.php');
+require_once(CONFIG_PATH.DS.'config.php');
 
 //Init DB
-require_once(ROOT.DS.'config'.DS.'mongo.php');
+require_once(CONFIG_PATH.DS.'mongo.php');
 
 //Start or Resume Session
 session_start();
@@ -12,17 +12,16 @@ session_start();
 /**
  * @param $class_name
  * @throws Exception
- * @description This Function runs automatically whenever a class is called, and it require it using our logic.
+ * @description This Function runs automatically whenever a class is called, and it require_once() it using our directory rules.
  */
 function __autoload($class_name){
-    $libPath = ROOT.DS.'lib'.DS.strtolower($class_name).'.class.php';
-    //Remove Controller from class name by str_replace
-    $controllerPath = ROOT.DS.'controllers'.DS.str_replace('controller', '', strtolower($class_name)).'.controller.php';
-    $modelPath = ROOT.DS.'models'.DS.strtolower($class_name).'.class.php';
+    $libPath = LIBRARY_PATH.DS.strtolower($class_name).'.class.php';
+    $controllerPath = CONTROLLER_PATH.DS.str_replace('controller', '', strtolower($class_name)).'.controller.php';
+    $modelPath = MODEL_PATH.DS.strtolower($class_name).'.class.php';
     if(file_exists($libPath))
         require_once($libPath);
-    elseif (file_exists($controllerPath))
+    if (file_exists($controllerPath))
         require_once($controllerPath);
-    elseif (file_exists($modelPath))
+    if (file_exists($modelPath))
         require_once($modelPath);
 }
