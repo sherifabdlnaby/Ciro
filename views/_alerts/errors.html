@@ -1,11 +1,13 @@
-
+<div class="container">
+    <br/>
     <div class="col-lg-12">
-            <?php foreach($data['_errorMessages'] as $error){ ?>
-            <div class="alert alert-dismissible alert-danger">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>
-                    <?=$error?>
-                </strong>
-            </div>
-            <?php } ?>
+        <?php foreach($data['_errorAlerts'] as $error){ ?>
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>
+                <?=$error?>
+            </strong>
+        </div>
+        <?php } ?>
     </div>
+</div>

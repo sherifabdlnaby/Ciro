@@ -46,10 +46,8 @@ class View{
         return $content;
     }
 
-    public static function renderAlerts($data = array())
+    public static function renderAlerts(&$data = array())
     {
-
-        //TODO COMPACT
         //START RENDERING
         ob_start();
 
@@ -57,7 +55,7 @@ class View{
         if(isset($data['_errorAlerts']))
         {
             //Render Errors
-            include(ALERT_VIEW_PATH.DS.'error.html');
+            include(ALERT_VIEW_PATH.DS.'errors.html');
             //Clean Errors
             unset($data['errorAlerts']);
         }
@@ -66,7 +64,7 @@ class View{
         if(isset($data['_warningAlerts']))
         {
             //Render Errors
-            include(ALERT_VIEW_PATH.DS.'warning.html');
+            include(ALERT_VIEW_PATH.DS.'warnings.html');
             //Clean Errors
             unset($data['_warningAlerts']);
         }
@@ -75,7 +73,7 @@ class View{
         if(isset($data['_infoAlerts']))
         {
             //Render Errors
-            include(ALERT_VIEW_PATH.DS.'info.html');
+            include(ALERT_VIEW_PATH.DS.'infos.html');
             //Clean Errors
             unset($data['_infoAlerts']);
         }
@@ -84,7 +82,7 @@ class View{
         if(isset($data['_successAlerts']))
         {
             //Render Errors
-            include(ALERT_VIEW_PATH.DS.'success.html');
+            include(ALERT_VIEW_PATH.DS.'successes.html');
             //Clean Errors
             unset($data['_successAlerts']);
         }

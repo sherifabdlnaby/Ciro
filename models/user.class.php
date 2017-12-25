@@ -5,7 +5,6 @@ class User{
     public $passwordHash;
     public $email;
     public $name;
-    public $phoneNumber;
 
     /**
      * User constructor.
@@ -16,12 +15,11 @@ class User{
      * @param $phoneNumber
      * @param null $_id
      */
-    public function __construct($username = null, $passwordHash= null, $email= null, $name= null, $phoneNumber= null)
+    public function __construct($username = null, $passwordHash= null, $email= null, $name= null)
     {
         $this->username = $username;
         $this->passwordHash = $passwordHash;
         $this->email = $email;
         $this->name = $name;
-        $this->phoneNumber = $phoneNumber;
     }
 }

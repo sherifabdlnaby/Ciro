@@ -15,6 +15,9 @@ class Controller{
         $this->params = App::getRouter() -> getParams();
     }
 
+    /** Render controller, default view is rendered if no path specified
+     * @param null $viewPath
+     */
     function render($viewPath = null){
         //Render Body
         $viewObj = new View($this ->data, $viewPath);
@@ -31,7 +34,7 @@ class Controller{
         $header = $headerObj->render();
         $footer = $footerObj->render();
 
-        //Render Alerts
+        //Render Alerts;
         $alerts = View::renderAlerts($this->data);
 
         //Render Layout
@@ -95,7 +98,7 @@ class Controller{
     /** Redirect User to Login if he isn't logged in */
     function verifyLogin(){
         if(!isset($_SESSION['_id'])) {
-            $this->redirect('/Account/Login?backUrl=' . $_SERVER['REQUEST_URI']);
+            $this->redirect('/Account/Login?returnUrl=' . $_SERVER['REQUEST_URI']);
         }
     }
 
@@ -107,7 +110,6 @@ class Controller{
         $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
         $this -> render($errorPath);
     }
-
 
     /**
      * @return mixed

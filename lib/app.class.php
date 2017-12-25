@@ -29,8 +29,9 @@ class App{
             $controllerObject->$controllerMethod();
             exit();
         }
+
         //SEND 404
-        $Error = new ErrController(404);
-        $Error -> SendAndRenderError();
+        $controllerObject = new Controller();
+        $controllerObject -> renderFullError(404);
     }
 }

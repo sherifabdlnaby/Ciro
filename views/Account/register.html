@@ -4,37 +4,33 @@
         <br/>
         <h1>Register</h1>
         <hr/>
-        <form method="post" action="/Account/Register">
+        <form method="post" autocomplete="on" action="/Account/Register">
             <fieldset>
             <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Name</label>
+                <label class="col-form-label">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Name">
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Username</label>
+                <label class="col-form-label">Username</label>
                 <input type="text" name="username" class="form-control" placeholder="Username">
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <label class="col-form-label">Password</label>
+                <input type="password" autocomplete="off" name="password" class="form-control" placeholder="Password">
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Confirm Password</label>
-                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password">
+                <label class="col-form-label">Confirm Password</label>
+                <input type="password" autocomplete="off" name="confirmPassword" class="form-control" placeholder="Confirm Password">
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Email</label>
+                <label class="col-form-label">Email</label>
                 <input type="text" name="email"  class="form-control" placeholder="Email">
             </div>
 
-            <div class="form-group">
-                <label class="col-form-label" for="inputDefault">Phone Number</label>
-                <input type="text" name="phoneNumber" class="form-control" placeholder="Phone Number">
-            </div>
             <br/>
             <button type="submit" class="btn btn-primary">Register </button>
             </fieldset>
