@@ -9,6 +9,7 @@ define('VIEW_PATH', ROOT.DS.'views');
 define('CONTROLLER_PATH', ROOT.DS.'controllers');
 define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_layouts');
 define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_errors');
+define('ALERT_VIEW_PATH', VIEW_PATH.DS.'_alerts');
 
 //INITIALIZE
 require_once(ROOT.DS.'lib'.DS.'init.php');

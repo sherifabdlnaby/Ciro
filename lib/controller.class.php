@@ -31,9 +31,12 @@ class Controller{
         $header = $headerObj->render();
         $footer = $footerObj->render();
 
+        //Render Alerts
+        $alerts = View::renderAlerts($this->data);
+
         //Render Layout
         $layoutPath = LAYOUT_VIEW_PATH.DS.$layout.'.html';
-        $layoutView = new View(compact('content', 'header', 'footer'), $layoutPath);
+        $layoutView = new View(compact('content', 'header', 'footer', 'alerts'), $layoutPath);
 
         echo $layoutView -> render();
 
@@ -49,16 +52,46 @@ class Controller{
         exit();
     }
 
-    /** Add Error Messages to be rendered to user when $this -> render() is called
-     * @param $errorMessage
+    /** Add Error Alerts to be rendered to user when controller's $this -> render() is called
+     * @param $errorAlert
      */
-    function addError($errorMessage)
+    function addErrorAlert($errorAlert)
     {
-        if(!isset($this->data['errorMessages']))
-            $this -> data['errorMessages'] = array();
-        array_push($this->data['errorMessages'], $errorMessage);
+        if(!isset($this->data['_errorAlerts']))
+            $this -> data['_errorAlerts'] = array();
+        array_push($this->data['_errorAlerts'], $errorAlert);
     }
 
+    /** Add Warning Alerts to be rendered to user when controller's $this -> render() is called
+     * @param $warningAlert
+     */
+    function addWarningAlert($warningAlert)
+    {
+        if(!isset($this->data['_warningAlerts']))
+            $this -> data['_warningAlerts'] = array();
+        array_push($this->data['_warningAlerts'], $warningAlert);
+    }
+
+    /** Add info Alerts to be rendered to user when controller's $this -> render() is called
+     * @param $infoAlert
+     */
+    function addInfoAlert($infoAlert)
+    {
+        if(!isset($this->data['_infoAlerts']))
+            $this -> data['_infoAlerts'] = array();
+        array_push($this->data['_infoAlerts'], $infoAlert);
+    }
+
+    /** Add success Alerts to be rendered to user when controller's $this -> render() is called
+     * @param $successAlert
+     */
+    function addSuccessAlert($successAlert)
+    {
+        if(!isset($this->data['_successAlerts']))
+            $this -> data['_successAlerts'] = array();
+        array_push($this->data['_successAlerts'], $successAlert);
+    }
+    
     /** Redirect User to Login if he isn't logged in */
     function verifyLogin(){
         if(!isset($_SESSION['_id'])) {
@@ -74,6 +107,7 @@ class Controller{
         $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
         $this -> render($errorPath);
     }
+
 
     /**
      * @return mixed
