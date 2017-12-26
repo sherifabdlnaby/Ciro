@@ -2,47 +2,63 @@
 
 class Controller{
     protected $data;
+    protected $alerts;
+    protected $meta;
     protected $model;
     protected $params;
 
     /**
      * Controller constructor.
-     * @param $data
+     * @param array $data
+     * @param array $meta
+     * @param array $alerts
      */
-    public function __construct($data = array())
+    public function __construct($data = array(), $meta = array(), $alerts = array())
     {
         $this->data = $data;
+        $this->meta = $meta;
+        $this->alerts = $alerts;
         $this->params = App::getRouter() -> getParams();
     }
 
     /** Render controller, default view is rendered if no path specified
      * @param null $viewPath
+     * @param null $layout
      */
-    function render($viewPath = null){
-        //Render Body
-        $viewObj = new View($this ->data, $viewPath);
-        $content = $viewObj -> render();
-
+    function render($viewPath = null, $layout = null){
         ///Prepare Layout
-        $layout = App::getRouter() -> getRoute();
-        $layoutHeaderPath = LAYOUT_VIEW_PATH.DS.$layout.'.header.html';
-        $layoutFooterPath = LAYOUT_VIEW_PATH.DS.$layout.'.footer.html';
+        if(!$layout)
+            $layout = Config::get('default_layout');
 
-        //Render Header / Footer
-        $headerObj = new View(array(), $layoutHeaderPath);
-        $footerObj = new View(array(), $layoutFooterPath);
-        $header = $headerObj->render();
-        $footer = $footerObj->render();
+        //Layout Paths
+        $layoutPath       = LAYOUT_VIEW_PATH.DS.$layout.DS.'layout.html';
+        $layoutHeaderPath = LAYOUT_VIEW_PATH.DS.$layout.DS.'header.html';
+        $layoutFooterPath = LAYOUT_VIEW_PATH.DS.$layout.DS.'footer.html';
+        $layoutMetaPath   = LAYOUT_VIEW_PATH.DS.$layout.DS.'meta.html';
+        $layoutAlertsDir  = LAYOUT_VIEW_PATH.DS.$layout.DS.'alerts';
 
-        //Render Alerts;
-        $alerts = View::renderAlerts($this->data);
+        //Render Header / Footer / Meta / Body
+        $bodyObj    = new View($this->data, $viewPath);
+        $headerObj  = new View(array(), $layoutHeaderPath);
+        $footerObj  = new View(array(), $layoutFooterPath);
+        $metaObj    = new View(array(), $layoutMetaPath, $this->meta);
 
-        //Render Layout
-        $layoutPath = LAYOUT_VIEW_PATH.DS.$layout.'.html';
-        $layoutView = new View(compact('content', 'header', 'footer', 'alerts'), $layoutPath);
+        //Do The Render
+        $content = $bodyObj  ->render();
+        $header  = $headerObj->render();
+        $footer  = $footerObj->render();
+        $meta    = $metaObj  ->render();
 
+        //Render Alerts
+        $alerts = View::renderAlerts($this->alerts, $layoutAlertsDir);
+
+        //Render Full Layout
+        $layoutView = new View(compact('meta','header','alerts','content', 'footer'), $layoutPath);
+
+        //Print Full Rendered Page
         echo $layoutView -> render();
 
+        //Exit Script
         exit();
     }
 
@@ -83,9 +99,10 @@ class Controller{
      */
     function addErrorAlert($errorAlert)
     {
-        if(!isset($this->data['_errorAlerts']))
-            $this -> data['_errorAlerts'] = array();
-        array_push($this->data['_errorAlerts'], $errorAlert);
+        if(!isset($this->alerts['errorAlerts']))
+            $this->alerts['errorAlerts'] = array();
+
+        array_push($this->alerts['errorAlerts'], $errorAlert);
     }
 
     /** Add Warning Alerts to be rendered to user when controller's $this -> render() is called
@@ -93,9 +110,10 @@ class Controller{
      */
     function addWarningAlert($warningAlert)
     {
-        if(!isset($this->data['_warningAlerts']))
-            $this -> data['_warningAlerts'] = array();
-        array_push($this->data['_warningAlerts'], $warningAlert);
+        if(!isset($this->alerts['warningAlerts']))
+            $this->alerts['warningAlerts'] = array();
+
+        array_push($this->alerts['warningAlerts'], $warningAlert);
     }
 
     /** Add info Alerts to be rendered to user when controller's $this -> render() is called
@@ -103,9 +121,10 @@ class Controller{
      */
     function addInfoAlert($infoAlert)
     {
-        if(!isset($this->data['_infoAlerts']))
-            $this -> data['_infoAlerts'] = array();
-        array_push($this->data['_infoAlerts'], $infoAlert);
+        if(!isset($this->alerts['infoAlerts']))
+            $this->alerts['infoAlerts'] = array();
+
+        array_push($this->alerts['infoAlerts'], $infoAlert);
     }
 
     /** Add success Alerts to be rendered to user when controller's $this -> render() is called
@@ -113,9 +132,10 @@ class Controller{
      */
     function addSuccessAlert($successAlert)
     {
-        if(!isset($this->data['_successAlerts']))
-            $this -> data['_successAlerts'] = array();
-        array_push($this->data['_successAlerts'], $successAlert);
+        if(!isset($this->alerts['successAlerts']))
+            $this->alerts['successAlerts'] = array();
+
+        array_push($this->alerts['successAlerts'], $successAlert);
     }
 
     /**

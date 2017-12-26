@@ -1,11 +1,11 @@
 <div class="container">
     <br/>
     <div class="col-lg-12">
-        <?php foreach($data['_successAlerts'] as $success){ ?>
-        <div class="alert alert-dismissible alert-success">
+        <?php foreach($data['errorAlerts'] as $error){ ?>
+        <div class="alert alert-dismissible alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>
-                <?=$success?>
+                <?=$error?>
             </strong>
         </div>
         <?php } ?>
