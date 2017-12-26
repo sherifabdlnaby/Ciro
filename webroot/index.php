@@ -11,16 +11,12 @@ define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_layouts');
 define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_errors');
 define('ALERT_VIEW_PATH', VIEW_PATH.DS.'_alerts');
 
-
-//TODO Error Img
-//TODO Alerts <br/>
 //TODO Update Bootstrap
 //TODO Include CSS/JS
 //TODO Custom Layouts
 //TODO Session Alert Messages
 //TODO APIs routing
 //TODO Custom routing
-
 
 //INITIALIZE
 require_once(ROOT.DS.'lib'.DS.'init.php');
