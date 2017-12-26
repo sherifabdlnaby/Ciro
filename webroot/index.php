@@ -8,7 +8,7 @@ define('MODEL_PATH', ROOT.DS.'models');
 define('VIEW_PATH', ROOT.DS.'views');
 define('CONTROLLER_PATH', ROOT.DS.'controllers');
 define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_layouts');
-define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_errors');
+define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_full_errors');
 define('ALERT_VIEW_PATH', VIEW_PATH.DS.'_alerts');
 
 //TODO Custom Layouts
