@@ -7,7 +7,8 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/">
+                    <i class="fas fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -20,11 +21,11 @@
                     {
                         ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Account/View/<?=$_SESSION['username']?>"><span class="glyphicon glyphicon-user"></span><strong>  <?=$_SESSION['username']?></strong></a>
+                                <a class="nav-link" href="/Account/View/<?=$_SESSION['username']?>"><i class="fas fa-user"></i><strong>  <?=$_SESSION['username']?></strong></a>
                             </li>
                             <li class="divider-vertical nav-link"> | </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="\Account\Logout?returnUrl=<?=$_SERVER['REQUEST_URI']?>"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                <a class="nav-link" href="\Account\Logout?returnUrl=<?=$_SERVER['REQUEST_URI']?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </li>
                         <?php
                     }
@@ -32,13 +33,13 @@
                     {
                         ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="\Account\Login">Login</a>
+                                <a class="nav-link" href="\Account\Login"><i class="fas fa-sign-in-alt"></i> Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link">|</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="\Account\Register">Register</a>
+                                <a class="nav-link" href="\Account\Register"><i class="fas fa-user-plus"></i> Register</a>
                             </li>
                         <?php
                     }
