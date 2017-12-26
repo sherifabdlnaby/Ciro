@@ -21,12 +21,13 @@ class AccountController extends Controller{
                 if(password_verify($password, $user['passwordHash']))
                 {
                     //LOGGED IN
-                    $_SESSION["_id"] = $user['_id'];
-                    $_SESSION["username"] = $user['username'];
-                    //Redirect ->
+                    Session::saveLoginSession($user['_id'], $user['username']);
+
                     //Redirect to returnUrl if exits, Else Redirect to Home
                     if(!empty($_GET['returnUrl']))
                         $this->redirect($_GET['returnUrl']);
+
+                    //Redirect Home
                     $this->redirect('/');
                 }
             }
@@ -104,9 +105,8 @@ class AccountController extends Controller{
                 $collection = DBMongo::getCollection("Users");
                 $collection->insert($user);
 
-                //SAVE SESSION
-                $_SESSION["_id"] = $user->_id;
-                $_SESSION["username"] = $user->username;
+                //Save Session
+                Session::saveLoginSession($user ->_id, $user ->username);
 
                 $this->redirect('/');
             }
@@ -120,8 +120,7 @@ class AccountController extends Controller{
     }
 
     public function logout(){
-        session_unset();
-        session_destroy();
+        Session::destroyLoginSession();
         if(!empty($_GET['returnUrl']))
             $this->redirect($_GET['returnUrl']);
         $this->redirect('/');
@@ -131,6 +130,7 @@ class AccountController extends Controller{
         //QueryDB
         $collection = DBMongo::getCollection("Users");
         $user = $collection -> findOne(array("username" => $this ->params[0]));
+
         //Compare Information
         if($user)
         {

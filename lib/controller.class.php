@@ -55,6 +55,29 @@ class Controller{
         exit();
     }
 
+    /** Render Custom Full Error page and send the corresponding error status code
+     * @param $errorNum
+     */
+    function renderFullError($errorNum){
+        http_response_code($errorNum);
+        $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
+        $this -> render($errorPath);
+    }
+
+    /** Redirect User to Login if he isn't logged in */
+    function verifyLoggedIn(){
+        if(!Session::isLoggedIn()) {
+            $this->redirect('/Account/Login' . '?returnUrl=' . $_SERVER['REQUEST_URI']);
+        }
+    }
+
+    /** Redirect User to Homepage if he is logged in */
+    function verifyNotLoggedIn(){
+        if(Session::isLoggedIn()) {
+            $this->redirect('/');
+        }
+    }
+
     /** Add Error Alerts to be rendered to user when controller's $this -> render() is called
      * @param $errorAlert
      */
@@ -93,22 +116,6 @@ class Controller{
         if(!isset($this->data['_successAlerts']))
             $this -> data['_successAlerts'] = array();
         array_push($this->data['_successAlerts'], $successAlert);
-    }
-    
-    /** Redirect User to Login if he isn't logged in */
-    function verifyLogin(){
-        if(!isset($_SESSION['_id'])) {
-            $this->redirect('/Account/Login?returnUrl=' . $_SERVER['REQUEST_URI']);
-        }
-    }
-
-    /** Render Custom Full Error page and send the corresponding error status code
-     * @param $errorNum
-     */
-    public function renderFullError($errorNum){
-        http_response_code($errorNum);
-        $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
-        $this -> render($errorPath);
     }
 
     /**
