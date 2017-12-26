@@ -11,9 +11,8 @@ define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_layouts');
 define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_errors');
 define('ALERT_VIEW_PATH', VIEW_PATH.DS.'_alerts');
 
-//TODO Update Bootstrap
-//TODO Include CSS/JS
 //TODO Custom Layouts
+//TODO Include CSS/JS
 //TODO Session Alert Messages
 //TODO APIs routing
 //TODO Custom routing
