@@ -2,7 +2,6 @@
 
 class Controller{
     protected $data;
-    protected $alerts;
     protected $meta;
     protected $model;
     protected $params;
@@ -17,7 +16,6 @@ class Controller{
     {
         $this->data = $data;
         $this->meta = $meta;
-        $this->alerts = $alerts;
         $this->params = App::getRouter() -> getParams();
     }
 
@@ -50,7 +48,12 @@ class Controller{
         $meta    = $metaObj  ->render();
 
         //Render Alerts
-        $alerts = View::renderAlerts($this->alerts, $layoutAlertsDir);
+        $alerts = "";
+        if(isset($_SESSION['_alerts']))
+        {
+            $alerts = View::renderAlerts($_SESSION['_alerts'], $layoutAlertsDir);
+            unset($_SESSION['_alerts']);
+        }
 
         //Render Full Layout
         $layoutView = new View(compact('meta','header','alerts','content', 'footer'), $layoutPath);
@@ -94,15 +97,25 @@ class Controller{
         }
     }
 
+    /* Storing Alert messages in $_SESSION['_alert']['alertType'] rather than $_SESSION['alertType'] directly
+    is for not to occupy many variable names for the framework, render alerts by simply checking on isset($_SESSION['alert']) when rendering
+    rather than checking of all different types of alerts (which in most render cases won't have alerts), and also to easily modify where to save
+    alerts in-case you don't want it to be saved in $_SESSION, just collect this alerts in one array and pass it to renderAlerts function from View::
+    */
+
     /** Add Error Alerts to be rendered to user when controller's $this -> render() is called
      * @param $errorAlert
      */
     function addErrorAlert($errorAlert)
     {
-        if(!isset($this->alerts['errorAlerts']))
-            $this->alerts['errorAlerts'] = array();
+        //Check if _alert variable has been declared before or not.
+        if(!isset($_SESSION['_alerts']))
+            $_SESSION['_alerts'] = array();
 
-        array_push($this->alerts['errorAlerts'], $errorAlert);
+        if(!isset($_SESSION['_alerts']['errorAlerts']))
+            $_SESSION['_alerts']['errorAlerts'] = array();
+
+        array_push($_SESSION['_alerts']['errorAlerts'], $errorAlert);
     }
 
     /** Add Warning Alerts to be rendered to user when controller's $this -> render() is called
@@ -110,10 +123,13 @@ class Controller{
      */
     function addWarningAlert($warningAlert)
     {
-        if(!isset($this->alerts['warningAlerts']))
-            $this->alerts['warningAlerts'] = array();
+        if(!isset($_SESSION['_alerts']))
+            $_SESSION['_alerts'] = array();
 
-        array_push($this->alerts['warningAlerts'], $warningAlert);
+        if(!isset($_SESSION['_alerts']['warningAlerts']))
+            $_SESSION['_alerts']['warningAlerts'] = array();
+
+        array_push($_SESSION['_alerts']['warningAlerts'], $warningAlert);
     }
 
     /** Add info Alerts to be rendered to user when controller's $this -> render() is called
@@ -121,10 +137,13 @@ class Controller{
      */
     function addInfoAlert($infoAlert)
     {
-        if(!isset($this->alerts['infoAlerts']))
-            $this->alerts['infoAlerts'] = array();
+        if(!isset($_SESSION['_alerts']))
+            $_SESSION['_alerts'] = array();
 
-        array_push($this->alerts['infoAlerts'], $infoAlert);
+        if(!isset($_SESSION['_alerts']['infoAlerts']))
+            $_SESSION['_alerts']['infoAlerts'] = array();
+
+        array_push($_SESSION['_alerts']['infoAlerts'], $infoAlert);
     }
 
     /** Add success Alerts to be rendered to user when controller's $this -> render() is called
@@ -132,10 +151,13 @@ class Controller{
      */
     function addSuccessAlert($successAlert)
     {
-        if(!isset($this->alerts['successAlerts']))
-            $this->alerts['successAlerts'] = array();
+        if(!isset($_SESSION['_alerts']))
+            $_SESSION['_alerts'] = array();
 
-        array_push($this->alerts['successAlerts'], $successAlert);
+        if(!isset($_SESSION['_alerts']['successAlerts']))
+            $_SESSION['_alerts']['successAlerts'] = array();
+
+        array_push($_SESSION['_alerts']['successAlerts'], $successAlert);
     }
 
     /**

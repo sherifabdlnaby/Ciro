@@ -90,6 +90,9 @@ class View{
             unset($data['successAlerts']);
         }
 
+        //unset parent array.
+        unset($data);
+
         //Collect output
         $content = ob_get_clean();
 

@@ -1,7 +1,7 @@
 <?php
 
 class Session{
-    /** Save Parameters to Session var for Login*/
+    /** Saved Parameters to Session var for Login*/
     public static function saveLoginSession(&$_id, &$username)
     {
         //SAVE SESSION
