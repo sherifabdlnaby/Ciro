@@ -19,12 +19,11 @@ class Router{
         //Load Defaults
         $routes = Config::get('routes');
         $this -> route = Config::get('default_route');
-        $this -> route_prefix = isset($routes[$this -> route]) ? $routes[$this -> route] : '';
+        $this -> route_prefix = $routes[$this->route];
         $this -> controller = Config::get('default_controller');
         $this -> action = Config::get('default_action');
 
         //Parse
-
         $uri_parts = explode('?', $this->uri);
 
         //Get URL without GET parms
@@ -38,12 +37,12 @@ class Router{
             //Get Route from first part if exits
             if( in_array(strtolower(current($path_parts)), array_keys($routes))){
                 $this->route = strtolower(current($path_parts));
-                $this->route_prefix = isset($routes[$this->route]) ? $routes[$this->route] : "";
+                $this->route_prefix = $routes[$this->route];
                 array_shift($path_parts);
             }
 
             //Get Controller
-            if( current($path_parts) ){
+            if(current($path_parts)){
                 $this->controller = strtolower(current($path_parts));
                 array_shift($path_parts);
             }

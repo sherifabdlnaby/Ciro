@@ -15,8 +15,8 @@ class App{
     {
         self::$router = new router($uri);
 
-        $controllerClass = ucfirst(self::$router->getController())."Controller";
-        $controllerMethod = ucfirst(self::$router->getRoutePrefix() . self::$router->getAction());
+        $controllerClass = ucfirst(self::$router->getController()).self::$router -> getRoutePrefix()."Controller";
+        $controllerMethod = ucfirst(self::$router->getAction());
 
         //Create New Controller Object from variable (Yeay PHP stuff :'D)
         $controllerObject = null;
