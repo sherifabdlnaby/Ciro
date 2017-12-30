@@ -1,2 +1,2 @@
-# CMS-IT-PROJECT
-A basic Vanilia PHP website
+# PHP FRAMEWORK
+A Framework to Kickstart your PHP project.
