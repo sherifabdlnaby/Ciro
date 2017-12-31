@@ -22,6 +22,7 @@ class Controller{
     /** Render controller, default view is rendered if no path specified
      * @param null $viewPath
      * @param null $layout
+     * @return string
      */
     function render($viewPath = null, $layout = null){
         ///Prepare Layout
@@ -58,11 +59,8 @@ class Controller{
         //Render Full Layout
         $layoutView = new View(compact('meta','header','alerts','content', 'footer'), $layoutPath);
 
-        //Print Full Rendered Page
-        echo $layoutView -> render();
-
-        //Exit Script
-        exit();
+        //Return Full Rendered Page
+        return $layoutView -> render();
     }
 
     /** Redirect User to the given path.
@@ -70,23 +68,25 @@ class Controller{
      */
     function redirect($path)
     {
-        header("Location: ".$path);
-        exit();
+        return header("Location: ".$path);
     }
 
     /** Render Custom Full Error page and send the corresponding error status code
      * @param $errorNum
+     * @return string
      */
     function renderFullError($errorNum){
         http_response_code($errorNum);
         $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
-        $this -> render($errorPath);
+        return $this -> render($errorPath);
     }
 
     /** Redirect User to Login if he isn't logged in */
     function verifyLoggedIn(){
         if(!Session::isLoggedIn()) {
-            $this->redirect('/Account/Login' . '?returnUrl=' . $_SERVER['REQUEST_URI']);
+           $this->redirect('/Account/Login' . '?returnUrl=' . $_SERVER['REQUEST_URI']);
+           //Exit the script (the whole request, sending the redirect header only)
+           exit();
         }
     }
 
@@ -94,6 +94,8 @@ class Controller{
     function verifyNotLoggedIn(){
         if(Session::isLoggedIn()) {
             $this->redirect('/');
+            //Exit the script (the whole request, sending the redirect header only)
+            exit();
         }
     }
 

@@ -26,7 +26,7 @@ class Router{
         //Parse
         $uri_parts = explode('?', $this->uri);
 
-        //Get URL without GET parms
+        //Get URL without GET params
         $uri_path = $uri_parts[0];
 
         //Get Path Parts

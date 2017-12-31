@@ -2,7 +2,7 @@
 
 class AccountController extends Controller{
     public function index(){
-        $this->renderFullError(404);
+        return $this->renderFullError(404);
     }
 
     public function login(){
@@ -28,16 +28,16 @@ class AccountController extends Controller{
                         $this->redirect($_GET['returnUrl']);
 
                     //Redirect Home
-                    $this->redirect('/');
+                    return $this->redirect('/');
                 }
             }
             //Render Form Again with Error Messages
             $this->addErrorAlert('Invalid Username or Password');
-            $this ->render();
+            return $this ->render();
         }
         else{
             //GET -> RENDER FORM
-            $this->render();
+            return $this->render();
         }
     }
 
@@ -108,22 +108,22 @@ class AccountController extends Controller{
                 //Save Session
                 Session::saveLoginSession($user ->_id, $user ->username);
 
-                $this->redirect('/');
+                return $this->redirect('/');
             }
 
             //Render Form back with error alerts if Validate == false.
             else
-                $this->render();
+                return $this->render();
         }
         //ELSE GET = RENDER FORM
-        $this->render();
+        return $this->render();
     }
 
     public function logout(){
         Session::destroyLoginSession();
         if(!empty($_GET['returnUrl']))
-            $this->redirect($_GET['returnUrl']);
-        $this->redirect('/');
+            return $this->redirect($_GET['returnUrl']);
+        return $this->redirect('/');
     }
 
     public function view(){
@@ -138,10 +138,10 @@ class AccountController extends Controller{
             $this -> data['username'] = &$user['username'];
             $this -> data['name'] = &$user['name'];
             $this -> data['email'] = &$user['email'];
-            $this->render();
+            return $this->render();
         }
         else{
-            $this->renderFullError(404);
+           return $this->renderFullError(404);
         }
     }
 

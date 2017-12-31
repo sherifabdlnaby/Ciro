@@ -26,12 +26,15 @@ class App{
         //Check if Controller and Action Exists in our code
         if(method_exists($controllerObject, $controllerMethod)) {
             //RUN Controller
-            $controllerObject->$controllerMethod();
+            $controllerOutput = $controllerObject->$controllerMethod();
+            echo $controllerOutput;
             exit();
         }
 
         //SEND 404
         $controllerObject = new Controller();
-        $controllerObject -> renderFullError(404);
+        $controllerOutput = $controllerObject -> renderFullError(404);
+        echo $controllerOutput;
+        exit();
     }
 }
