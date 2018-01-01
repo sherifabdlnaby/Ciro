@@ -27,7 +27,7 @@ class View{
     {
         $router = App::getRouter();
         $controllerDir = $router -> getController();
-        $templateName = $router -> getRoutePrefix().$router -> getAction().'.html';
+        $templateName = $router -> getAction(). $router -> getRoutePostFix().'.html';
         return VIEW_PATH.DS.$controllerDir.DS.$templateName;
     }
 

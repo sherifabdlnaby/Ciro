@@ -1,6 +1,6 @@
 <?php
 
-class HomeAPIController extends Controller{
+class Home_APIController extends Controller{
     public function index(){
         echo 'API WORKING';
     }

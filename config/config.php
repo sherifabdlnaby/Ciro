@@ -11,8 +11,11 @@ Config::set('default_action', 'index');
 Config::set('default_layout', 'default');
 
 //Routes Table
+/*Controllers of Route should be post-fixed with the route value
+/*e.g( 'api' route matches -> Name'_Api'Controller, 'default'route -> Name''Controller -> HomeController)
+*/
 Config::set('routes', array(
     'default' => '',
-    'api' => 'api',
-    'admin' => 'admin'
+    'api' => '_Api',
+    'admin' => '_Admin'
 ));

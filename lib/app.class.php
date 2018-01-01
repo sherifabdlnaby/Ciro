@@ -15,7 +15,9 @@ class App{
     {
         self::$router = new router($uri);
 
-        $controllerClass = ucfirst(self::$router->getController()).self::$router -> getRoutePrefix()."Controller";
+        //ClassName = Url Controller + Route Prefix + 'Controller'
+        $bareClassName = ucfirst(self::$router->getController()).self::$router -> getRoutePostfix();
+        $controllerClass = $bareClassName."Controller";
         $controllerMethod = ucfirst(self::$router->getAction());
 
         //Create New Controller Object from variable (Yeay PHP stuff :'D)
@@ -27,7 +29,9 @@ class App{
         if(method_exists($controllerObject, $controllerMethod)) {
             //RUN Controller
             $controllerOutput = $controllerObject->$controllerMethod();
+            //echo Controller's output
             echo $controllerOutput;
+            //Exit Script.
             exit();
         }
 

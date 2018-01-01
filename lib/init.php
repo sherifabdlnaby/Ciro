@@ -16,12 +16,16 @@ session_start();
  */
 function __autoload($class_name){
     $libPath = LIBRARY_PATH.DS.strtolower($class_name).'.class.php';
-    $controllerPath = CONTROLLER_PATH.DS.str_replace('controller', '', strtolower($class_name)).'.controller.php';
     $modelPath = MODEL_PATH.DS.strtolower($class_name).'.class.php';
+    $controllerClassName = str_replace('controller', '', strtolower($class_name));
+    $webControllerPath = CONTROLLER_PATH.DS.'web'.DS.$controllerClassName.'.controller.php';
+    $apiControllerPath = CONTROLLER_PATH.DS.'api'.DS.$controllerClassName.'.controller.php';
     if(file_exists($libPath))
         require_once($libPath);
-    if (file_exists($controllerPath))
-        require_once($controllerPath);
+    if (file_exists($webControllerPath))
+        require_once($webControllerPath);
+    if (file_exists($apiControllerPath))
+        require_once($apiControllerPath);
     if (file_exists($modelPath))
         require_once($modelPath);
 }
