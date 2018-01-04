@@ -8,13 +8,12 @@ class View{
     /**
      * View constructor.
      * @param $data
+     * @param $path
+     * @param null $meta
      * @throws Exception
      */
-    public function __construct($data = array(), $path = null, $meta = null)
+    public function __construct(&$data, $path, &$meta = null)
     {
-        if (!$path)
-            $path = self::getDefaultViewPath();
-
         if(!file_exists($path))
             throw new Exception("Template not found at ".$path);
 

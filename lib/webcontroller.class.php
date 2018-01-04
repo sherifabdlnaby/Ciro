@@ -21,8 +21,21 @@ class WebController extends Controller {
      * @param null $layout
      * @return string
      */
-    function render($viewPath = null, $layout = null){
-        ///Prepare Layout
+    function render(&$data = null, &$meta = null, $viewPath = null, $layout = null){
+
+        //If a specific $data is not passed, use Controller's $this -> data instead
+        if(!$data)
+            $data = $this -> data;
+
+        //If a specific $meta is not passed, use Controller's $this -> meta instead
+        if(!$meta)
+            $meta = $this -> meta;
+
+        //If a specific $meta is not passed, use Controller's $this -> meta instead
+        if(!$viewPath)
+            $viewPath = View::getDefaultViewPath();
+
+        ///Prepare Layout, if spe
         if(!$layout)
             $layout = Config::get('default_layout');
 
@@ -33,23 +46,29 @@ class WebController extends Controller {
         $layoutMetaPath   = LAYOUT_VIEW_PATH.DS.$layout.DS.'meta.html';
         $layoutAlertsDir  = LAYOUT_VIEW_PATH.DS.$layout.DS.'alerts';
 
-        //Render Header / Footer / Meta / Body
-        $bodyObj    = new View($this->data, $viewPath);
-        $headerObj  = new View(array(), $layoutHeaderPath);
-        $footerObj  = new View(array(), $layoutFooterPath);
-        $metaObj    = new View(array(), $layoutMetaPath, $this->meta);
+        //A dummy Var to be passed to views that doesn't use controller's data (as View's $data is passed by reference for optimization)
+        $dummyVar = null;
+
+        //Create Header / Footer / Meta / Body Views Instances
+        $bodyObj    = new View($data, $viewPath);
+        $headerObj  = new View($dummyArray, $layoutHeaderPath);
+        $footerObj  = new View($dummyArray, $layoutFooterPath);
+        $metaObj    = new View($dummyArray, $layoutMetaPath, $meta);
 
         //Do The Render
-        $content = $bodyObj  ->render();
-        $header  = $headerObj->render();
-        $footer  = $footerObj->render();
-        $meta    = $metaObj  ->render();
+        $content    = $bodyObj  ->render();
+        $header     = $headerObj->render();
+        $footer     = $footerObj->render();
+        $meta       = $metaObj  ->render();
 
-        //Render Alerts
+        //Render Alerts if exits
         $alerts = "";
         if(isset($_SESSION['_alerts']))
         {
+            //Render Alerts from $_SESSION
             $alerts = View::renderAlerts($_SESSION['_alerts'], $layoutAlertsDir);
+
+            //Unset Alerts Var
             unset($_SESSION['_alerts']);
         }
 
