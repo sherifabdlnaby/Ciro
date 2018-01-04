@@ -28,7 +28,7 @@ class App{
         }
 
         //SEND 404 NOT FOUND
-        $controllerObject = new Controller();
+        $controllerObject = new WebController();
         $controllerOutput = $controllerObject -> renderFullError(404);
         echo $controllerOutput;
         exit();

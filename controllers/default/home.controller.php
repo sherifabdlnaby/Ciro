@@ -6,7 +6,7 @@
  * (unless you changed default route prefix in config)
  */
 
-class HomeController extends Controller{
+class HomeController extends WebController {
     public function index(){
         return $this->render();
     }

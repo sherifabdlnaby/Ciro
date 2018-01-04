@@ -6,7 +6,7 @@
  * (unless you changed default route prefix in config)
  */
 
-class AccountController extends Controller{
+class AccountController extends WebController {
     public function index(){
         return $this->renderFullError(404);
     }
