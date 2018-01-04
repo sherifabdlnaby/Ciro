@@ -17,15 +17,34 @@ session_start();
 function __autoload($class_name){
     $libPath = LIBRARY_PATH.DS.strtolower($class_name).'.class.php';
     $modelPath = MODEL_PATH.DS.strtolower($class_name).'.class.php';
-    $controllerClassName = str_replace('controller', '', strtolower($class_name));
-    $webControllerPath = CONTROLLER_PATH.DS.'web'.DS.$controllerClassName.'.controller.php';
-    $apiControllerPath = CONTROLLER_PATH.DS.'api'.DS.$controllerClassName.'.controller.php';
-    if(file_exists($libPath))
+
+    //Include Lib Classes (Unique Class Names, hence return if found).
+    if(file_exists($libPath)){
         require_once($libPath);
-    if (file_exists($webControllerPath))
-        require_once($webControllerPath);
-    if (file_exists($apiControllerPath))
-        require_once($apiControllerPath);
+        return;
+    }
+
+    //Include Model Classes
     if (file_exists($modelPath))
         require_once($modelPath);
+
+    //Search in all Controllers Directories
+    $subDirectories = scandir(CONTROLLER_PATH);
+    $controllerClassName = str_replace('controller', '', strtolower($class_name));
+    foreach ($subDirectories as $subDirectory)
+    {
+        //Ignore Parent Directories.
+        if($subDirectory == '.' || $subDirectory =='..')
+            continue;
+
+        //Create Full Path
+        $ControllerPath = CONTROLLER_PATH.DS.$subDirectory.DS.$controllerClassName.'.controller.php';
+
+        //Include if exits
+        if (file_exists($ControllerPath))
+        {
+            require_once($ControllerPath);
+            return;
+        }
+    }
 }

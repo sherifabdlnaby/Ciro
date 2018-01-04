@@ -6,7 +6,7 @@ class Router{
     protected $action;
     protected $params;
     protected $route;
-    protected $route_postfix;
+    protected $routePrefix;
 
     /**
      * Router constructor.
@@ -19,7 +19,7 @@ class Router{
         //Load Defaults
         $routes = Config::get('routes');
         $this -> route = Config::get('default_route');
-        $this -> route_postfix = $routes[$this->route];
+        $this -> routePrefix = $routes[$this->route];
         $this -> controller = Config::get('default_controller');
         $this -> action = Config::get('default_action');
 
@@ -37,7 +37,7 @@ class Router{
             //Get Route from first part if exits
             if( in_array(strtolower(current($path_parts)), array_keys($routes))){
                 $this->route = strtolower(current($path_parts));
-                $this->route_postfix = $routes[$this->route];
+                $this->routePrefix = $routes[$this->route];
                 array_shift($path_parts);
             }
 
@@ -142,17 +142,17 @@ class Router{
     /**
      * @return string
      */
-    public function getRoutePostfix()
+    public function getRoutePrefix()
     {
-        return $this->route_postfix;
+        return $this->routePrefix;
     }
 
     /**
-     * @param string $route_postfix
+     * @param string $routePrefix
      */
-    public function setRoutePostfix($route_postfix)
+    public function setRoutePrefix($routePrefix)
     {
-        $this->route_postfix = $route_postfix;
+        $this->routePrefix = $routePrefix;
     }
 
 }

@@ -3,22 +3,14 @@
 class App{
     protected static $router;
 
-    /**
-     * @return mixed
-     */
-    public static function getRouter()
-    {
-        return self::$router;
-    }
-
     public static function run($uri)
     {
         self::$router = new router($uri);
 
         //ClassName = Url Controller + Route Prefix + 'Controller'
-        $bareClassName = ucfirst(self::$router->getController()).self::$router -> getRoutePostfix();
+        $bareClassName = self::$router -> getRoutePrefix().self::$router->getController();
         $controllerClass = $bareClassName."Controller";
-        $controllerMethod = ucfirst(self::$router->getAction());
+        $controllerMethod = self::$router->getAction();
 
         //Create New Controller Object from variable (Yeay PHP stuff :'D)
         $controllerObject = null;
@@ -35,10 +27,19 @@ class App{
             exit();
         }
 
-        //SEND 404
+        //SEND 404 NOT FOUND
         $controllerObject = new Controller();
         $controllerOutput = $controllerObject -> renderFullError(404);
         echo $controllerOutput;
         exit();
     }
+
+    /**
+     * @return mixed
+     */
+    public static function getRouter()
+    {
+        return self::$router;
+    }
+
 }

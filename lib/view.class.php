@@ -26,8 +26,8 @@ class View{
     public static function getDefaultViewPath()
     {
         $router = App::getRouter();
-        $controllerDir = $router -> getController();
-        $templateName = $router -> getAction(). $router -> getRoutePostFix().'.html';
+        $controllerDir = $router -> getRoute().DS.$router -> getController();
+        $templateName = $router -> getAction().'.html';
         return VIEW_PATH.DS.$controllerDir.DS.$templateName;
     }
 
