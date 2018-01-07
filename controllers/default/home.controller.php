@@ -7,11 +7,19 @@
  */
 
 class HomeController extends WebController {
-    public function index(){
+    public function Index(){
         return $this->render();
     }
 
     public function About(){
         return $this->render();
+    }
+
+    public function CustomRouteOne($id, $name, $desc){
+        echo $id.' - Name: -'.$name.' - Description: '.$desc;
+    }
+
+    public function CustomRouteTwo(){
+        echo 'BLANK';
     }
 }

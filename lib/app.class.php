@@ -20,14 +20,14 @@ class App{
         //Check if Controller and Action Exists in our code
         if(method_exists($controllerObject, $controllerMethod)) {
             //RUN Controller
-            $controllerOutput = $controllerObject->$controllerMethod();
+            $controllerOutput = call_user_func_array(array($controllerObject, $controllerMethod), self::$router -> getParams());
             //echo Controller's output
             echo $controllerOutput;
             //Exit Script.
             exit();
         }
 
-        //SEND 404 NOT FOUND
+        //SEND 404 NOT FOUND {WEB}
         $controllerObject = new WebController();
         $controllerOutput = $controllerObject -> renderFullError(404);
         echo $controllerOutput;

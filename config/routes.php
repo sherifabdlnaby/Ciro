@@ -1,3 +1,4 @@
 <?php
 
-Route::set('home/route/{$id}/test','default', 'routeController', 'route($id)');
+Route::set('custom/route/{id}/of/{name}/blabla/{desc}','default', 'home', 'CustomRouteOne');
+Route::set('custom/route/blank','default', 'home', 'CustomRouteTwo');

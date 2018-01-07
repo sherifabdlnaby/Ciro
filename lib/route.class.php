@@ -18,13 +18,23 @@ class Route{
         foreach (self::$routes as $route => $routeAttributes)
         {
             //Compare Matching Pattern
+
+            //Explode to parts
             $route_parts = explode('/', $route);
-            $matching = true;
-            $i = 0;
+
+            ///Escape this custom route earlier if it's count > current uri parts count (will always be false)
+            ///Won't escape If current uri parts count > custom route in-case of using slangs in the url.
+            if(count($route_parts) > count($path_parts))
+                continue;
+
+            //Start Matching
+            $i = 0; $matching = true;
+            $params = array();
             foreach ($route_parts as $route_part) {
                 //Check if a parameter .../{xxx}/....
                 if ($route_part[0] === '{' && $route_part[strlen($route_part) - 1] === '}') {
-                    $numb = 123;
+                    //Collect Params
+                    array_push($params, $path_parts[$i]);
                 }
 
                 //Check if uri part is equal to route part;
@@ -36,8 +46,10 @@ class Route{
                 //Increment Path Iterator
                 ++$i;
             }
-            if($matching === true)
-                return $matching;
+            if($matching === true){
+                $routeAttributes['params'] = $params;
+                return $routeAttributes;
+            }
         }
         return false;
     }

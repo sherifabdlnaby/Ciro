@@ -1,13 +1,14 @@
 <?php
 
 class Router{
-    protected $uri;
-    protected $controller;
-    protected $action;
-    protected $params;
-    protected $route;
-    protected $routePrefix;
-
+    protected $uri;             //Uri
+    protected $route;           //Request route
+    protected $routePrefix;     //Request routePrefix
+    protected $controller;      //Request controller
+    protected $action;          //Request controller action
+    protected $params;          //Request Parameters
+                                ///* in Custom routes $params are passed in method argument
+                                ///* in Default routes $params are passed in controller's $params[] array.
     /**
      * Router constructor.
      * @param $uri
@@ -15,15 +16,6 @@ class Router{
     public function __construct($uri)
     {
         $this->uri = urldecode(trim($uri,'/'));
-
-
-
-        //Load Defaults
-        $routes = Config::get('routes');
-        $this -> route = Config::get('default_route');
-        $this -> routePrefix = $routes[$this->route];
-        $this -> controller = Config::get('default_controller');
-        $this -> action = Config::get('default_action');
 
         //Parse
         $uri_parts = explode('?', $this->uri);
@@ -34,8 +26,29 @@ class Router{
         //Get Path Separated Parts
         $path_parts = explode('/', $uri_path);
 
-        //Check if parts matches a custom Route
-        Route::routeMatch($path_parts);
+        //get routes.
+        $routes = Config::get('routes');
+
+        //CUSTOM ROUTING
+        ///Check if parts matches a custom Route parts.
+        ///Return false if no custom routes matched, else return attributes array 'route','controller','action', 'params'.
+        $customRouteAttributes = Route::routeMatch($path_parts);
+        if($customRouteAttributes !== false)
+        {
+            $this -> route = $customRouteAttributes['route'];
+            $this -> routePrefix = $routes[$this->route];
+            $this -> controller = $customRouteAttributes['controller'];
+            $this -> action = $customRouteAttributes['action'];
+            $this -> params = $customRouteAttributes['params'];
+            return;
+        }
+
+        //DEFAULT ROUTING if reached here.
+        //Load Defaults
+        $this -> route = Config::get('default_route');
+        $this -> routePrefix = $routes[$this->route];
+        $this -> controller = Config::get('default_controller');
+        $this -> action = Config::get('default_action');
 
         if(count($path_parts))
         {
@@ -60,7 +73,6 @@ class Router{
 
             //Get Params
             $this -> params = $path_parts;
-
         }
     }
 
