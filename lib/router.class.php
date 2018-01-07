@@ -16,6 +16,8 @@ class Router{
     {
         $this->uri = urldecode(trim($uri,'/'));
 
+
+
         //Load Defaults
         $routes = Config::get('routes');
         $this -> route = Config::get('default_route');
@@ -26,11 +28,14 @@ class Router{
         //Parse
         $uri_parts = explode('?', $this->uri);
 
-        //Get URL without GET params
+        //Get URL without GET? params
         $uri_path = $uri_parts[0];
 
-        //Get Path Parts
+        //Get Path Separated Parts
         $path_parts = explode('/', $uri_path);
+
+        //Check if parts matches a custom Route
+        Route::routeMatch($path_parts);
 
         if(count($path_parts))
         {

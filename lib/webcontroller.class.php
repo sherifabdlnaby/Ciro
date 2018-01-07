@@ -21,6 +21,7 @@ class WebController extends Controller {
      * @param null $layout
      * @return string
      */
+    //TODO Make cleaner parameter order
     function render(&$data = null, &$meta = null, $viewPath = null, $layout = null){
 
         //If a specific $data is not passed, use Controller's $this -> data instead
@@ -86,7 +87,9 @@ class WebController extends Controller {
     function renderFullError($errorNum){
         http_response_code($errorNum);
         $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
-        return $this -> render($errorPath);
+        //A dummy Var to be passed  (as Controller's parameters are passed by reference for optimization)
+        $dummyVar = null;
+        return $this -> render($dummyVar, $dummyVar ,$viewPath = $errorPath);
     }
 
     /** Redirect User to Login if he isn't logged in */

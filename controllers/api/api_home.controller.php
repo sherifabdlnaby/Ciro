@@ -6,10 +6,6 @@
 
 class API_HomeController extends ApiController {
     public function index(){
-        echo 'API WORKING';
-    }
-
-    public function About(){
-        echo 'API WORKING';
+        return json_encode('API');
     }
 }

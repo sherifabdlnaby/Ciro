@@ -3,6 +3,9 @@
 //Init Config
 require_once(CONFIG_PATH.DS.'config.php');
 
+//Init Routing
+require_once(CONFIG_PATH.DS.'routes.php');
+
 //Init DB
 require_once(CONFIG_PATH.DS.'mongo.php');
 
