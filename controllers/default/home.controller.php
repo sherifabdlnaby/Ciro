@@ -15,7 +15,7 @@ class HomeController extends WebController {
         return $this->render();
     }
 
-    public function CustomRouteOne($id, $name, $desc){
+    public function CustomRouteOne($id, $name, $desc = 'optional'){
         echo $id.' - Name: -'.$name.' - Description: '.$desc;
     }
 
