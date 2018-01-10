@@ -19,7 +19,4 @@ class HomeController extends WebController {
         echo $id.' - Name: -'.$name.' - Description: '.$desc;
     }
 
-    public function CustomRouteTwo(){
-        echo 'BLANK';
-    }
 }

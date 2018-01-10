@@ -3,6 +3,10 @@
 class App{
     protected static $router;
 
+    /**
+     * @param $uri
+     * @throws Exception
+     */
     public static function run($uri)
     {
         self::$router = new router($uri);
@@ -27,7 +31,15 @@ class App{
             exit();
         }
 
-        //SEND 404 NOT FOUND {WEB}
+        //REACHING HERE -> Routing Failed.
+
+        //If Routed via a Custom Route, throw exception
+        // (It's developer's responsibility to route custom routes to correct Controller's Action).
+        if(self::$router->isCustomRoute())
+            throw new Exception("Route handled by Custom Route failed, Can't find Action: '".self::$router->getAction()."', Controller: '".self::$router->getController()."', Route: '".self::$router->getRoute()."'. Please check route parameters at route.php.");
+
+        //If Routed via Default Route (User entering incorrect URL)
+        //SEND 404 NOT FOUND Web-page {WEB}
         $controllerObject = new WebController();
         $controllerOutput = $controllerObject -> renderFullError(404);
         echo $controllerOutput;

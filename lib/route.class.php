@@ -2,23 +2,53 @@
 
 class Route
 {
-    protected static $routes = array();
+    protected static $GetRoutes = array();
+    protected static $PostRoutes = array();
+    protected static $PutRoutes = array();
+    protected static $PatchRoutes = array();
+    protected static $DeleteRoutes = array();
+    protected static $OptionsRoutes = array();
+    protected static $AllRoutes = array();
 
-    public static function get($key)
+    /**
+     * match path parts with all registered custom routes according to REQUEST_METHOD
+     * return parsed attributes if matched, false otherwise.
+     * @param $path_parts (URI exploded by '/')
+     * @return false if not matched | routeAttributes array() if matched.
+     */
+    public static function CustomRouteMatch(&$path_parts)
     {
-        return isset(self::$routes[$key]) ? self::$routes[$key] : null;
+        $routeAttributes = false;
+
+        if($_SERVER['REQUEST_METHOD'] === 'GET')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$GetRoutes);
+        else if($_SERVER['REQUEST_METHOD'] === 'POST')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$PostRoutes);
+        else if($_SERVER['REQUEST_METHOD'] === 'PUT')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$PutRoutes);
+        else if($_SERVER['REQUEST_METHOD'] === 'PATCH')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$PatchRoutes);
+        else if($_SERVER['REQUEST_METHOD'] === 'DELETE')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$DeleteRoutes);
+        else if($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
+            $routeAttributes = Route::routeMatch($path_parts, Route::$OptionsRoutes);
+
+        //If routeAttributes === false -> check $AllRoutes.
+        if($routeAttributes === false)
+            $routeAttributes = Route::routeMatch($path_parts, Route::$AllRoutes);
+
+        return $routeAttributes;
     }
 
-    public static function set($key, $route, $controller, $action)
+    /**
+     * match path parts with all registered custom routes, return parsed attributes if matched, false otherwise.
+     * @param $path_parts (URI exploded by '/')
+     * @param $routes
+     * @return false if not matched | routeAttributes array() if matched.
+     */
+    public static function routeMatch(&$path_parts, &$routes)
     {
-        self::$routes[$key] = array('route' => $route,
-            'controller' => $controller,
-            'action' => $action);
-    }
-
-    public static function routeMatch($path_parts)
-    {
-        foreach (self::$routes as $route => $routeAttributes) {
+        foreach ($routes as $route => $routeAttributes) {
             //--Compare Matching Pattern--
 
             //Explode to parts
@@ -62,5 +92,61 @@ class Route
 
         }
         return false;
+    }
+
+    public static function Get($key, $route, $controller, $action)
+    {
+        self::$GetRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function Post($key, $route, $controller, $action)
+    {
+        self::$PostRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function Put($key, $route, $controller, $action)
+    {
+        self::$PutRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function Patch($key, $route, $controller, $action)
+    {
+        self::$PatchRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function Delete($key, $route, $controller, $action)
+    {
+        self::$DeleteRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function Options($key, $route, $controller, $action)
+    {
+        self::$OptionsRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
+    }
+
+    public static function All($key, $route, $controller, $action)
+    {
+        self::$AllRoutes[$key] = array(
+            'route' => $route,
+            'controller' => $controller,
+            'action' => $action);
     }
 }

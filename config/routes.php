@@ -11,7 +11,9 @@
  *      Route::X('custom/route/{id}/{name}/{language?}','default', 'home', 'CustomRouteOne');
  *      This Route Correspond to the action 'CustomRouteOne' in the controller 'Home', which belongs to the route 'default'
  *      The CustomRouteOne function signature should be 'public function CustomRouteOne($id, $name, language = 'English')'
+ *
+ * - Throws an Exception if Custom Route doesn't match an existing Route, Controller, and Action.
+ * - Route::Get/Post/Put/Patch/Delete/Options routes if REQUEST_METHOD matches. Route::All routes regardless of REQUEST_METHOD.
 */
 
-Route::set('custom/route/{id}/of/{name}/blabla/{desc?}','default', 'home', 'CustomRouteOne');
-Route::set('custom/route/blank/{id?}','default', 'home', 'CustomRouteTwo');
+Route::All('custom/route/{id}/of/{name}/blabla/{desc?}','default', 'home', 'CustomRouteOne');
