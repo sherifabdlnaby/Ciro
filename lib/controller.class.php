@@ -23,7 +23,14 @@ abstract class  Controller{
      */
     function redirect($path)
     {
-        return header("Location: ".$path);
+        header("Location: ".$path);
+        return null;
+
+        /*
+        * Return null, only header with no test is sent, hence browsers will redirect following the location.
+        (can be void, I returned null just to avoid some IDEs warnings when returning a void function,
+        It doesn't impact result or performance whatsoever )
+        */
     }
 
     /**

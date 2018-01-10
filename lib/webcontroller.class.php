@@ -17,14 +17,23 @@ class WebController extends Controller {
     }
 
     /** Render controller, default view is rendered if no path specified.
-     * @param null $viewPath
      * @param null $layout
+     * @param null $viewPath
+     * @param null $data
+     * @param null $meta
      * @return string
      */
-    //TODO Make cleaner parameter order
-    function render(&$data = null, &$meta = null, $viewPath = null, $layout = null){
+    function render($layout = null, $viewPath = null, &$data = null, &$meta = null){
 
-        //If a specific $data is not passed, use Controller's $this -> data instead
+        ///If no specific Layout no, use default Layout.
+        if(!$layout)
+            $layout = Config::get('default_layout');
+
+        //If no specific viewPath is passed, use default Path instead.
+        if(!$viewPath)
+            $viewPath = View::getDefaultViewPath();
+
+        //If no specific $data is not passed, use Controller's $this -> data instead
         if(!$data)
             $data = $this -> data;
 
@@ -32,13 +41,6 @@ class WebController extends Controller {
         if(!$meta)
             $meta = $this -> meta;
 
-        //If a specific $meta is not passed, use Controller's $this -> meta instead
-        if(!$viewPath)
-            $viewPath = View::getDefaultViewPath();
-
-        ///Prepare Layout, if spe
-        if(!$layout)
-            $layout = Config::get('default_layout');
 
         //Layout Paths
         $layoutPath       = LAYOUT_VIEW_PATH.DS.$layout.DS.'layout.html';
@@ -52,9 +54,9 @@ class WebController extends Controller {
 
         //Create Header / Footer / Meta / Body Views Instances
         $bodyObj    = new View($data, $viewPath);
-        $headerObj  = new View($dummyArray, $layoutHeaderPath);
-        $footerObj  = new View($dummyArray, $layoutFooterPath);
-        $metaObj    = new View($dummyArray, $layoutMetaPath, $meta);
+        $headerObj  = new View($dummyVar, $layoutHeaderPath);
+        $footerObj  = new View($dummyVar, $layoutFooterPath);
+        $metaObj    = new View($dummyVar, $layoutMetaPath, $meta);
 
         //Do The Render
         $content    = $bodyObj  ->render();
@@ -76,7 +78,7 @@ class WebController extends Controller {
         //Render Full Layout
         $layoutView = new View(compact('meta','header','alerts','content', 'footer'), $layoutPath);
 
-        //Return Full Rendered Page
+        //Return Full Rendered Page3
         return $layoutView -> render();
     }
 
@@ -85,11 +87,15 @@ class WebController extends Controller {
      * @return string
      */
     function renderFullError($errorNum){
+
+        //Send response code via Header.
         http_response_code($errorNum);
+
+        //Construct Error Path.
         $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
-        //A dummy Var to be passed  (as Controller's parameters are passed by reference for optimization)
-        $dummyVar = null;
-        return $this -> render($dummyVar, $dummyVar ,$viewPath = $errorPath);
+
+        //render Full Error using default Layout (null), and the Error HTML in $errorPath.
+        return $this -> render(null, $viewPath = $errorPath);
     }
 
     /** Redirect User to Login if he isn't logged in */

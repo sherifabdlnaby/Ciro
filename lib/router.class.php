@@ -15,7 +15,7 @@ class Router{
      * Router constructor.
      * @param $uri
      */
-    public function __construct($uri)
+    public function __construct(&$uri)
     {
         $this->uri = urldecode(trim($uri,'/'));
 

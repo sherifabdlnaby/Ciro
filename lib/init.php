@@ -14,7 +14,6 @@ session_start();
 
 /**
  * @param $class_name
- * @throws Exception
  * @description This Function runs automatically whenever a class is called, and it require_once() it using our directory rules.
  */
 function __autoload($class_name){

@@ -18,6 +18,6 @@ try {
 }
 catch(Exception $e)
 {
-    print_r("EXCEPTION FROM INDEX: ".$e -> getMessage());
+    print_r("EXCEPTION : ".$e -> getMessage());
 }
 
