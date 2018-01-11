@@ -54,6 +54,10 @@ class Route
             //Explode to parts
             $route_parts = explode('/', $route);
 
+            //Escape this route if it is less than current path.
+            if(count($path_parts) > count($route_parts))
+                continue;
+
             //Start Matching
             $i = 0;
             $matching = true;

@@ -23,3 +23,10 @@ Config::set('routes', array(
     'api'       => 'API_',
     'admin'     => 'Admin_'
 ));
+
+
+//Database Settings
+Config::set('mysql_host',   'localhost');
+Config::set('mysql_user',   'root');
+Config::set('mysql_password', '');
+Config::set('mysql_db_name', 'default_database');

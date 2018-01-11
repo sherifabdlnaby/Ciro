@@ -8,6 +8,7 @@
 
 class HomeController extends WebController {
     public function Index(){
+        $db = DB::connection();
         return $this->render();
     }
 
