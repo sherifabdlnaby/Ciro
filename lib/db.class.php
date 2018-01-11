@@ -4,18 +4,19 @@
 class DB
 {
     protected static $connection;
+    protected static $settings = array();
 
     /**
-     * Singleton Connection
-     * @return mysqli connection
-     * @throws Exception if DB Connection failed.
+     * Singleton connection
+     * @return mysqli
      */
     public static function connection()
     {
+        static $instance;
+
         // Check if instance already exists
-        if(!isset(self::$connection)) {
-            self::$connection = new DB(Config::get('mysql_host'), Config::get('mysql_user'), Config::get('mysql_password'), Config::get('mysql_db_name'));
-        }
+        if(!isset($instance))
+            $instance = new self(self::get('mysql_host'), self::get('mysql_user'), self::get('mysql_password'), self::get('mysql_db_name'));
 
         return self::$connection;
     }
@@ -84,9 +85,18 @@ class DB
     {
         self::$connection = new mysqli($host, $user, $password, $db_name);
 
-        if (isset(self::$connection->connect_error))
+        //If Error Occurred, Throw Exception
+        if (self::$connection->connect_errno !== 0)
             throw new Exception('Error Connecting to MySQL Database, Error: ' . self::connection()->connect_error);
     }
 
+    //CONFIG Functions
+    public static function get($key){
+        return isset(self::$settings[$key]) ? self::$settings[$key] : null;
+    }
+
+    public static function set($key, $value){
+        self::$settings[$key] = $value;
+    }
 
 }

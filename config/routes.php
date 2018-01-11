@@ -16,4 +16,4 @@
  * - Route::Get/Post/Put/Patch/Delete/Options routes if REQUEST_METHOD matches. Route::All routes regardless of REQUEST_METHOD.
 */
 
-Route::All('Account/{username}','default', 'Account', 'View');
+//Route::All('Account/{username}','default', 'Account', 'View');

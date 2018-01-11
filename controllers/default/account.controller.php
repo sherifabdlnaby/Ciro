@@ -11,10 +11,6 @@ class AccountController extends WebController {
         return $this->renderFullError(404);
     }
 
-    /**
-     * @return string|void
-     * @throws Exception
-     */
     public function login(){
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //load data
@@ -136,18 +132,13 @@ class AccountController extends WebController {
         return $this->redirect('/');
     }
 
-    /**
-     * @return string
-     * @throws Exception
-     */
     public function view($username){
         //QueryDB
         $collection = DBMongo::getCollection("Users");
         $user = $collection -> findOne(array("username" => $username));
 
         //Compare Information
-        if($user)
-        {
+        if($user){
             $this -> data['_id'] = &$user['_id'];
             $this -> data['username'] = &$user['username'];
             $this -> data['name'] = &$user['name'];

@@ -6,7 +6,10 @@ require_once(CONFIG_PATH.DS.'config.php');
 //Init Routing
 require_once(CONFIG_PATH.DS.'routes.php');
 
-//Init DB
+//Init MySQL
+require_once(CONFIG_PATH.DS.'mysql.php');
+
+//Init MongoDB
 require_once(CONFIG_PATH.DS.'mongo.php');
 
 //Start or Resume Session
@@ -16,6 +19,7 @@ session_start();
  * @param $class_name
  * @description This Function runs automatically whenever a class is called, and it require_once() it using our directory rules.
  */
+//TODO Make it COMPOSER compatible
 function __autoload($class_name){
     $libPath = LIBRARY_PATH.DS.strtolower($class_name).'.class.php';
     $modelPath = MODEL_PATH.DS.strtolower($class_name).'.class.php';

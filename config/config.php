@@ -3,7 +3,8 @@
 Config::set('site_name', 'PHP Framework');
 
 //Routing defaults
-Config::set('default_route', 'default');        //default route must match a route defined at routes table below.
+//default route must match a route defined at routes table below.
+Config::set('default_route', 'default');
 Config::set('default_controller', 'home');
 Config::set('default_action', 'index');
 
@@ -23,10 +24,3 @@ Config::set('routes', array(
     'api'       => 'API_',
     'admin'     => 'Admin_'
 ));
-
-
-//Database Settings
-Config::set('mysql_host',   'localhost');
-Config::set('mysql_user',   'root');
-Config::set('mysql_password', '');
-Config::set('mysql_db_name', 'default_database');
