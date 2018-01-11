@@ -3,21 +3,22 @@
 //Singleton Class
 class DB
 {
+    protected static $instance;
     protected static $connection;
     protected static $settings = array();
 
     /**
+     * Return mysqli object connected using config defaults.
      * Singleton connection
      * @return mysqli
      */
-    public static function connection()
+    public static function getConnection()
     {
-        static $instance;
-
         // Check if instance already exists
-        if(!isset($instance))
-            $instance = new self(self::get('mysql_host'), self::get('mysql_user'), self::get('mysql_password'), self::get('mysql_db_name'));
+        if(!isset(self::$instance))
+            self::$instance = new self(self::get('mysql_host'), self::get('mysql_user'), self::get('mysql_password'), self::get('mysql_db_name'));
 
+        // Return Connection (mysqli Object)
         return self::$connection;
     }
 
@@ -27,7 +28,7 @@ class DB
      * @return mysqli_result object for SELECT and equivalent queries, True for successful queries, False if otherwise.
      * @throws Exception if connection failed
      */
-    public function query($query) {
+    public static function query($query) {
         // Connect to the database
         $connection = self::connection();
 
@@ -45,9 +46,9 @@ class DB
      * @return array|bool array if success. false if failed.
      * @throws Exception
      */
-    public function select($query) {
+    public static function select($query) {
         //Run Query
-        $result = $this -> query($query);
+        $result = self::query($query);
 
         //Check if failed
         if($result === false)
@@ -68,9 +69,24 @@ class DB
      * @return string The escaped and quoted string
      * @throws Exception if Connection failed
      */
-    public function quote($value) {
+    public static function quote($value) {
         $connection = self::connection();
         return "'" . $connection -> real_escape_string($value) . "'";
+    }
+
+    /**
+     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
+     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
+     * anymore is considered a good practice.
+     */
+    public static function closeConnection(){
+        //Check if instance exists
+        if(isset(self::$instance)){
+            //Closes connection
+            self::$connection -> close();
+            //unset the instance, following connections will require re-connection to the DB.
+            self::$instance = null;
+        }
     }
 
     /**

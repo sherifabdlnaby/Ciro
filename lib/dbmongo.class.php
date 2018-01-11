@@ -1,6 +1,7 @@
 <?php
 
 class DBMongo{
+    protected static $instance;
     protected static $connection;
     protected static $settings = array();
 
@@ -20,10 +21,8 @@ class DBMongo{
      */
     public static function getMongoClient()
     {
-        static $instance;
-
-        if(!isset($instance))
-            $instance = new self();
+        if(!isset(self::$instance))
+            self::$instance = new self();
 
         return self::$connection;
     }
@@ -64,6 +63,21 @@ class DBMongo{
             return $db -> $collectionName;
 
         throw new Exception("No Collection with the Name: ". $collectionName.', Please check that Name matches config file.');
+    }
+
+    /**
+     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
+     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
+     * anymore is considered a good practice.
+     */
+    public static function closeConnection(){
+        //Check if instance exists
+        if(isset(self::$instance)){
+            //Closes connection
+            self::$connection -> close();
+            //unset the instance, following connections will require re-connection to the DB.
+            self::$instance = null;
+        }
     }
 
     //Config Functions
