@@ -2,7 +2,7 @@
 
 class Session{
     /** Saved Parameters to Session var for Login*/
-    public static function saveLoginSession(&$_id, &$username)
+    public static function saveLoginSession($_id, $username)
     {
         //SAVE SESSION
         $_SESSION["_id"] = $_id;

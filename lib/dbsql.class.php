@@ -26,11 +26,10 @@ class DBSql
      * Query the database directly without passing a connection.
      * @param $query string.
      * @return mysqli_result object for SELECT and equivalent queries, True for successful queries, False if otherwise.
-     * @throws Exception if connection failed
      */
     public static function query($query) {
         // Connect to the database
-        $connection = self::connection();
+        $connection = self::getConnection();
 
         // Query the database
         $result = $connection -> query($query);
@@ -44,7 +43,6 @@ class DBSql
      *
      * @param $query , for a SELECT query.
      * @return array|bool array if success. false if failed.
-     * @throws Exception
      */
     public static function select($query) {
         //Run Query
@@ -67,10 +65,9 @@ class DBSql
      * (Wrapper function to be used directly without the need to have mysqli connection to invoke real_escape_string();
      * @param string $value to be escaped and quoted
      * @return string The escaped and quoted string
-     * @throws Exception if Connection failed
      */
     public static function quote($value) {
-        $connection = self::connection();
+        $connection = self::getConnection();
         return "'" . $connection -> real_escape_string($value) . "'";
     }
 
