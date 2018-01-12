@@ -1,5 +1,6 @@
 <?php
 
+//Singleton Class
 class DBMongo{
     protected static $instance;
     protected static $connection;

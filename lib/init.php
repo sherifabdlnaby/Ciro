@@ -3,17 +3,21 @@
 //Init Config
 require_once(CONFIG_PATH.DS.'config.php');
 
+//Init MySQL if enabled.
+if(Config::get('use_mysql_db') === true)
+    require_once(CONFIG_PATH.DS.'mysql.php');
+
+//Init MongoDB if enabled
+if(Config::get('use_mysql_db') === true)
+    require_once(CONFIG_PATH.DS.'mongo.php');
+
 //Init Routing
-require_once(CONFIG_PATH.DS.'routes.php');
+if(Config::get('use_custom_routes') === true)
+    require_once(CONFIG_PATH.DS.'routes.php');
 
-//Init MySQL
-require_once(CONFIG_PATH.DS.'mysql.php');
-
-//Init MongoDB
-require_once(CONFIG_PATH.DS.'mongo.php');
-
-//Start or Resume Session
-session_start();
+//Start or Resume Session if global Session enabled
+if(Config::get('use_global_session') === true)
+    session_start();
 
 /**
  * @param $class_name

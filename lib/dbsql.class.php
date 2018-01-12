@@ -1,7 +1,7 @@
 <?php
 
 //Singleton Class
-class DB
+class DBSql
 {
     protected static $instance;
     protected static $connection;
@@ -9,7 +9,7 @@ class DB
 
     /**
      * Return mysqli object connected using config defaults.
-     * Singleton connection
+     * (Singleton connection)
      * @return mysqli
      */
     public static function getConnection()
@@ -42,7 +42,7 @@ class DB
      * Fetch rows from the database directly into an array
      * (a Wrapper function when you will used the entire query result, but in-efficient if used unwisely)
      *
-     * @param $query SELECT query string
+     * @param $query , for a SELECT query.
      * @return array|bool array if success. false if failed.
      * @throws Exception
      */

@@ -1,7 +1,7 @@
 <?php
 
-//Database Settings
-DB::set('mysql_host',   'localhost');
-DB::set('mysql_user',   'root');
-DB::set('mysql_password', '');
-DB::set('mysql_db_name', 'default_database');
+//Database Config Settings
+DBSql::set('mysql_host',    'localhost');
+DBSql::set('mysql_user',    'root');
+DBSql::set('mysql_password','');
+DBSql::set('mysql_db_name', 'default_database');
