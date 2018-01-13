@@ -100,7 +100,7 @@ class DBSql
 
         //If Error Occurred, Throw Exception
         if (self::$connection->connect_errno !== 0)
-            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::connection()->connect_error);
+            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
     }
 
     //CONFIG Functions

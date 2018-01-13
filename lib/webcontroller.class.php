@@ -82,20 +82,28 @@ class WebController extends Controller {
         return $layoutView -> render();
     }
 
-    /** Render Custom Full Error page and send the corresponding error status code
-     * @param $errorNum
+    /** Render Custom Full Error page and send the corresponding status if passed, and an optional layout.
+     * @param $message
+     * @param null $errorStatusCode
+     * @param null $layout
      * @return string
      */
-    function renderFullError($errorNum){
+    function renderFullError($message, $errorStatusCode = null, $layout = null){
+
+        $this->data['message'] = $message;
 
         //Send response code via Header.
-        http_response_code($errorNum);
+        if(is_numeric($errorStatusCode)){
+            http_response_code($errorStatusCode);
+            //Construct Error Path.
+            $errorPath = ERROR_VIEW_PATH.DS.$errorStatusCode.'.html';
+        }
+        else
+            //Construct Error Path.
+            $errorPath = ERROR_VIEW_PATH.DS.'error.html';
 
-        //Construct Error Path.
-        $errorPath = ERROR_VIEW_PATH.DS.$errorNum.'.html';
-
-        //render Full Error using default Layout (null), and the Error HTML in $errorPath.
-        return $this -> render(null, $viewPath = $errorPath);
+        //render Full Error in $errorPath (error.html if no status code passed, and $errorStatusCode.html otherwise)
+        return $this -> render($layout, $viewPath = $errorPath);
     }
 
     /** Redirect User to Login if he isn't logged in */

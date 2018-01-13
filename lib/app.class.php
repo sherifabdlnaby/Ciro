@@ -41,7 +41,7 @@ class App{
         //If Routed via Default Route (User entering incorrect URL)
         //SEND 404 NOT FOUND Web-page {WEB}
         $controllerObject = new WebController();
-        $controllerOutput = $controllerObject -> renderFullError(404);
+        $controllerOutput = $controllerObject -> renderFullError('Page Not Found', 404);
         echo $controllerOutput;
         exit();
     }

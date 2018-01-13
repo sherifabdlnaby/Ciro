@@ -8,7 +8,7 @@
 
 class AccountController extends WebController {
     public function index(){
-        return $this->renderFullError(404);
+        return $this->renderFullError('Not Found', 404);
     }
 
     public function login(){
@@ -143,7 +143,7 @@ class AccountController extends WebController {
             return $this->render();
         }
         else{
-           return $this->renderFullError(404);
+            return $this->renderFullError('Not Found', 404);
         }
     }
 
