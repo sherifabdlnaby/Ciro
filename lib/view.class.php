@@ -48,13 +48,15 @@ class View{
         return $content;
     }
 
-    public static function renderAlerts(&$data, $layoutAlertDir)
+    public static function renderAlerts($layoutAlertDir)
     {
         //START RENDERING
         ob_start();
 
+        $data = Session::getAlerts();
+
         //Render Error Alerts
-        if(isset($data['errorAlerts']))
+        if(!empty($data['errorAlerts']))
         {
             //Render Errors
             include($layoutAlertDir.DS.'errors.html');
@@ -63,7 +65,7 @@ class View{
         }
 
         //Render Warning Alerts
-        if(isset($data['warningAlerts']))
+        if(!empty($data['warningAlerts']))
         {
             //Render Errors
             include($layoutAlertDir.DS.'warnings.html');
@@ -72,7 +74,7 @@ class View{
         }
 
         //Render Info Alerts
-        if(isset($data['infoAlerts']))
+        if(!empty($data['infoAlerts']))
         {
             //Render Errors
             include($layoutAlertDir.DS.'infos.html');
@@ -81,17 +83,14 @@ class View{
         }
 
         //Render Success Alerts
-        if(isset($data['successAlerts']))
+        if(!empty($data['successAlerts']))
         {
             //Render Errors
             include($layoutAlertDir.DS.'successes.html');
             //Clean Errors
             unset($data['successAlerts']);
         }
-
-        //unset parent array.
-        unset($data);
-
+        
         //Collect output
         $content = ob_get_clean();
 

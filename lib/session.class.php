@@ -1,6 +1,7 @@
 <?php
 
-class Session{
+class Session
+{
     /** Saved Parameters to Session var for Login
      * @param $_id
      * @param $username
@@ -28,13 +29,13 @@ class Session{
     /** Add Error Alerts to be rendered to user when controller's $this -> render() is called
      * @param $errorAlert
      */
-    function addErrorAlert($errorAlert)
+    public static function addErrorAlert($errorAlert)
     {
         //Check if _alert variable has been declared before or not.
-        if(!isset($_SESSION['_alerts']))
+        if (!isset($_SESSION['_alerts']))
             $_SESSION['_alerts'] = array();
 
-        if(!isset($_SESSION['_alerts']['errorAlerts']))
+        if (!isset($_SESSION['_alerts']['errorAlerts']))
             $_SESSION['_alerts']['errorAlerts'] = array();
 
         array_push($_SESSION['_alerts']['errorAlerts'], $errorAlert);
@@ -43,12 +44,12 @@ class Session{
     /** Add Warning Alerts to be rendered to user when controller's $this -> render() is called
      * @param $warningAlert
      */
-    function addWarningAlert($warningAlert)
+    public static function addWarningAlert($warningAlert)
     {
-        if(!isset($_SESSION['_alerts']))
+        if (!isset($_SESSION['_alerts']))
             $_SESSION['_alerts'] = array();
 
-        if(!isset($_SESSION['_alerts']['warningAlerts']))
+        if (!isset($_SESSION['_alerts']['warningAlerts']))
             $_SESSION['_alerts']['warningAlerts'] = array();
 
         array_push($_SESSION['_alerts']['warningAlerts'], $warningAlert);
@@ -57,12 +58,12 @@ class Session{
     /** Add info Alerts to be rendered to user when controller's $this -> render() is called
      * @param $infoAlert
      */
-    function addInfoAlert($infoAlert)
+    public static function addInfoAlert($infoAlert)
     {
-        if(!isset($_SESSION['_alerts']))
+        if (!isset($_SESSION['_alerts']))
             $_SESSION['_alerts'] = array();
 
-        if(!isset($_SESSION['_alerts']['infoAlerts']))
+        if (!isset($_SESSION['_alerts']['infoAlerts']))
             $_SESSION['_alerts']['infoAlerts'] = array();
 
         array_push($_SESSION['_alerts']['infoAlerts'], $infoAlert);
@@ -71,15 +72,73 @@ class Session{
     /** Add success Alerts to be rendered to user when controller's $this -> render() is called
      * @param $successAlert
      */
-    function addSuccessAlert($successAlert)
+    public static function addSuccessAlert($successAlert)
     {
-        if(!isset($_SESSION['_alerts']))
+        if (!isset($_SESSION['_alerts']))
             $_SESSION['_alerts'] = array();
 
-        if(!isset($_SESSION['_alerts']['successAlerts']))
+        if (!isset($_SESSION['_alerts']['successAlerts']))
             $_SESSION['_alerts']['successAlerts'] = array();
 
         array_push($_SESSION['_alerts']['successAlerts'], $successAlert);
+    }
+
+    public static function hasAlerts()
+    {
+        return isset($_SESSION['_alerts']);
+    }
+
+    public static function getAlerts(){
+        return array(   'errorAlerts'   => self::getErrorAlerts(),
+                        'warningAlerts' => self::getWarningAlerts(),
+                        'infoAlerts'    => self::getInfoAlerts(),
+                        'successAlerts' => self::getSuccessAlerts()
+        );
+    }
+
+    public static function getErrorAlerts()
+    {
+        return isset($_SESSION['_alerts']['errorAlerts']) ?
+            $_SESSION['_alerts']['errorAlerts'] : array();
+    }
+
+    public static function getWarningAlerts()
+    {
+        return isset($_SESSION['_alerts']['warningAlerts']) ?
+            $_SESSION['_alerts']['warningAlerts'] : array();
+    }
+
+    public static function getInfoAlerts()
+    {
+        return isset($_SESSION['_alerts']['infoAlerts']) ?
+            $_SESSION['_alerts']['infoAlerts'] : array();
+    }
+
+    public static function getSuccessAlerts()
+    {
+        return isset($_SESSION['_alerts']['successAlerts']) ?
+            $_SESSION['_alerts']['successAlerts'] : array();
+
+    }
+
+    public static function unsetAllAlerts(){
+        unset($_SESSION['_alerts']);
+    }
+
+    public static function unsetErrorAlerts(){
+        unset($_SESSION['_alerts']['errorAlerts']);
+    }
+
+    public static function unsetWarningAlerts(){
+        unset($_SESSION['_alerts']['warningAlerts']);
+    }
+
+    public static function unsetInfoAlerts(){
+        unset($_SESSION['_alerts']['infoAlerts']);
+    }
+
+    public static function unsetSuccessAlerts(){
+        unset($_SESSION['_alerts']['successAlerts']);
     }
 
 }

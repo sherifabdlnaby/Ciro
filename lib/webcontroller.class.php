@@ -66,13 +66,13 @@ class WebController extends Controller {
 
         //Render Alerts if exits
         $alerts = "";
-        if(isset($_SESSION['_alerts']))
+        if(Session::hasAlerts())
         {
             //Render Alerts from $_SESSION
-            $alerts = View::renderAlerts($_SESSION['_alerts'], $layoutAlertsDir);
+            $alerts = View::renderAlerts($layoutAlertsDir);
 
-            //Unset Alerts Var
-            unset($_SESSION['_alerts']);
+            //Unset Alerts
+            Session::unsetAllAlerts();
         }
 
         //Render Full Layout
@@ -116,7 +116,7 @@ class WebController extends Controller {
     }
 
     /** Redirect User to Homepage if he is logged in */
-    function verifyNotLoggedIn(){
+   function verifyNotLoggedIn(){
         if(Session::isLoggedIn()) {
             $this->redirect('/');
             //Exit the script (the whole request, sending the redirect header only)
