@@ -7,6 +7,7 @@
  */
 
 class AccountController extends WebController {
+
     public function index(){
         return $this->renderFullError('Not Found', 404);
     }

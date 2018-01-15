@@ -124,69 +124,6 @@ class WebController extends Controller {
         }
     }
 
-    /* Storing Alert messages in $_SESSION['_alert']['alertType'] rather than $_SESSION['alertType'] directly
-    is for not to occupy many variable names for the framework, render alerts by simply checking on isset($_SESSION['alert']) when rendering
-    rather than checking of all different types of alerts (which in most render cases won't have alerts), and also to easily modify where to save
-    alerts in-case you don't want it to be saved in $_SESSION, just collect this alerts in one array and pass it to renderAlerts function from View::
-    */
-
-    /** Add Error Alerts to be rendered to user when controller's $this -> render() is called
-     * @param $errorAlert
-     */
-    function addErrorAlert($errorAlert)
-    {
-        //Check if _alert variable has been declared before or not.
-        if(!isset($_SESSION['_alerts']))
-            $_SESSION['_alerts'] = array();
-
-        if(!isset($_SESSION['_alerts']['errorAlerts']))
-            $_SESSION['_alerts']['errorAlerts'] = array();
-
-        array_push($_SESSION['_alerts']['errorAlerts'], $errorAlert);
-    }
-
-    /** Add Warning Alerts to be rendered to user when controller's $this -> render() is called
-     * @param $warningAlert
-     */
-    function addWarningAlert($warningAlert)
-    {
-        if(!isset($_SESSION['_alerts']))
-            $_SESSION['_alerts'] = array();
-
-        if(!isset($_SESSION['_alerts']['warningAlerts']))
-            $_SESSION['_alerts']['warningAlerts'] = array();
-
-        array_push($_SESSION['_alerts']['warningAlerts'], $warningAlert);
-    }
-
-    /** Add info Alerts to be rendered to user when controller's $this -> render() is called
-     * @param $infoAlert
-     */
-    function addInfoAlert($infoAlert)
-    {
-        if(!isset($_SESSION['_alerts']))
-            $_SESSION['_alerts'] = array();
-
-        if(!isset($_SESSION['_alerts']['infoAlerts']))
-            $_SESSION['_alerts']['infoAlerts'] = array();
-
-        array_push($_SESSION['_alerts']['infoAlerts'], $infoAlert);
-    }
-
-    /** Add success Alerts to be rendered to user when controller's $this -> render() is called
-     * @param $successAlert
-     */
-    function addSuccessAlert($successAlert)
-    {
-        if(!isset($_SESSION['_alerts']))
-            $_SESSION['_alerts'] = array();
-
-        if(!isset($_SESSION['_alerts']['successAlerts']))
-            $_SESSION['_alerts']['successAlerts'] = array();
-
-        array_push($_SESSION['_alerts']['successAlerts'], $successAlert);
-    }
-
     /**
      * @return array
      */
