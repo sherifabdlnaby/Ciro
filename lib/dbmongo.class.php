@@ -81,6 +81,18 @@ class DBMongo{
         }
     }
 
+    /* ensure true singleton */
+    public function __clone()
+    {
+        return false;
+    }
+
+    public function __wakeup()
+    {
+        return false;
+    }
+
+    //TODO Abstract this part
     //Config Functions
     public static function get($key){
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;

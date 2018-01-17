@@ -103,6 +103,18 @@ class DBSql
             throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
     }
 
+    /* ensure true singleton */
+    public function __clone()
+    {
+        return false;
+    }
+
+    public function __wakeup()
+    {
+        return false;
+    }
+
+    //TODO Abstract this part
     //CONFIG Functions
     public static function get($key){
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;
