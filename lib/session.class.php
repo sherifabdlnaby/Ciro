@@ -8,6 +8,9 @@ class Session
      */
     public static function saveLoginSession($_id, $username)
     {
+        //Regenerate new id (Avoid Session Fixation)
+        session_regenerate_id();
+
         //SAVE SESSION
         $_SESSION["_id"] = $_id;
         $_SESSION["username"] = $username;

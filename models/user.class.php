@@ -1,5 +1,5 @@
 <?php
-class User{
+class User {
     public $_id;
     public $username;
     public $passwordHash;
@@ -15,11 +15,17 @@ class User{
      * @param $phoneNumber
      * @param null $_id
      */
-    public function __construct($username = null, $passwordHash= null, $email= null, $name= null)
+    public function __construct($data = null)
     {
-        $this->username = $username;
-        $this->passwordHash = $passwordHash;
-        $this->email = $email;
-        $this->name = $name;
+        if (is_array($data))
+        {
+            if (isset($data['_id']))
+                $this->_id = $data['_id'];
+            $this->username = $data['username'];
+            $this->passwordHash = $data['passwordHash'];
+            $this->email = $data['email'];
+            $this->name = $data['name'];
+
+        }
     }
 }
