@@ -3,12 +3,16 @@
 //Init Config
 require_once(CONFIG_PATH.DS.'config.php');
 
-//Init MySQL if enabled.
+//Init MySQLi if enabled.
 if(Config::get('use_mysql_db') === true)
     require_once(CONFIG_PATH.DS.'mysql.php');
 
+//Init PDO if enabled.
+if(Config::get('use_pdo_db') === true)
+    require_once(CONFIG_PATH.DS.'mysql.php');
+
 //Init MongoDB if enabled
-if(Config::get('use_mysql_db') === true)
+if(Config::get('use_mongo_db') === true)
     require_once(CONFIG_PATH.DS.'mongo.php');
 
 //Init Routing

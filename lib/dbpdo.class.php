@@ -1,48 +1,53 @@
 <?php
 
 //Singleton Class
-class DBSql
+class DBPdo
 {
     //Singleton Instance
     protected static $instance;
-    //MYSqLi Connection
+    //PDO Connection
     protected static $connection;
-    //Settings array to hold MySQLi configurations via mysql.php
+    //Settings array to hold PDO configurations via pdo.php
     protected static $settings = array();
 
     /**
-     * Return mysqli object connected using config defaults.
+     * Return PDO object connected using config defaults in pdo.php.
      * (Singleton connection)
-     * @return mysqli
+     * @return PDO
      */
     public static function getConnection()
     {
         // Check if instance already exists
         if(!isset(self::$instance))
-            self::$instance = new self(self::get('mysql_host'), self::get('mysql_user'), self::get('mysql_password'), self::get('mysql_db_name'));
+            self::$instance = new self(self::get('dsn'), self::get('username'), self::get('password'));
 
         // Return Connection (mysqli Object)
         return self::$connection;
     }
 
     /**
-     * Query the database directly without passing a connection.
+     * Query and executes in DB directly, without passing a connection, will use default connection set in configurations.
      * @param $query string.
-     * @return mysqli_result object for SELECT and equivalent queries, True for successful queries, False if otherwise.
+     * @param null $bindValues
+     * @return PDOStatement|bool false if query failed to execute
      */
-    public static function query($query) {
+    public static function query($query, $bindValues = null) {
         // Connect to the database
         $connection = self::getConnection();
 
         // Query the database
-        $result = $connection -> query($query);
+        $PDOStatement = $connection -> query($query);
 
-        return $result;
+        if(is_array($bindValues))
+            return $PDOStatement -> execute($bindValues) ? $PDOStatement : false;
+        else
+            return $PDOStatement -> execute() ? $PDOStatement : false;
+
     }
 
     /**
-     * Fetch rows from the database directly into an array
-     * (a Wrapper function when you will used the entire query result, but in-efficient if used unwisely)
+     * Fetch rows from the database using a SELECT query fetched directly into an array.
+     * (a Wrapper function when you will used the entire query result, but can be memory in-efficient if used unwisely)
      *
      * @param $query , for a SELECT query.
      * @return array|bool array if success. false if failed.
@@ -55,23 +60,17 @@ class DBSql
         if($result === false)
             return false;
 
-        //Collect Result
-        $rows = array();
-        while ($row = $result -> fetch_assoc())
-            $rows[] = $row;
-
-        return $rows;
+        return $result -> fetchAll();
     }
 
     /**
      * Escape and Quote values to be used in a SQL Query
-     * (Wrapper function to be used directly without the need to have mysqli connection to invoke real_escape_string();
      * @param string $value to be escaped and quoted
      * @return string The escaped and quoted string
      */
     public static function quote($value) {
         $connection = self::getConnection();
-        return "'" . $connection -> real_escape_string($value) . "'";
+        return $connection -> quote($value);
     }
 
     /**
@@ -83,7 +82,7 @@ class DBSql
         //Check if instance exists
         if(isset(self::$instance)){
             //Closes connection
-            self::$connection -> close();
+            self::$connection = null;
             //unset the instance, following connections will require re-connection to the DB.
             self::$instance = null;
         }
@@ -91,19 +90,15 @@ class DBSql
 
     /**
      * Private DB constructor(Singleton Pattern).
-     * @param $host
-     * @param $user
+     * @param $dsn
+     * @param $username
      * @param $password
-     * @param $db_name
      * @throws Exception if DB Connection failed.
      */
-    private function __construct($host, $user, $password, $db_name)
+    private function __construct($dsn, $username, $password)
     {
-        self::$connection = new mysqli($host, $user, $password, $db_name);
-
-        //If Error Occurred, Throw Exception
-        if (self::$connection->connect_errno !== 0)
-            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
+        //If Error Occurred, Throws an Exception (caught at index.php).
+        self::$connection = new PDO($dsn, $username, $password);
     }
 
     /* ensure true singleton */

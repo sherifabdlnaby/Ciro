@@ -2,8 +2,11 @@
 
 //Singleton Class
 class DBMongo{
+    //Singleton Instance
     protected static $instance;
+    //Mongo Connection
     protected static $connection;
+    //Settings array to hold Mongo configurations set via mongo.php
     protected static $settings = array();
 
     /**
@@ -92,7 +95,6 @@ class DBMongo{
         return false;
     }
 
-    //TODO Abstract this part
     //Config Functions
     public static function get($key){
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;

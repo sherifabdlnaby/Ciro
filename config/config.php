@@ -4,6 +4,7 @@ Config::set('site_name', 'PHP Framework');
 
 /* Optional Settings */
 Config::set('use_mysql_db', true);
+Config::set('use_pdo_db', true);
 Config::set('use_mongo_db', true);
 Config::set('use_custom_routes', true);
 Config::set('use_global_session', true);    // <-- Start Session at start of every script.
