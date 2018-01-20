@@ -9,7 +9,7 @@ if(Config::get('use_mysql_db') === true)
 
 //Init PDO if enabled.
 if(Config::get('use_pdo_db') === true)
-    require_once(CONFIG_PATH.DS.'mysql.php');
+    require_once(CONFIG_PATH.DS.'pdo.php');
 
 //Init MongoDB if enabled
 if(Config::get('use_mongo_db') === true)

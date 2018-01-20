@@ -48,7 +48,7 @@ class RegisterService{
         }
 
         //Validate unique Email & Username
-        $checkUser = $userRepository -> findByUsernameOrEmail($username, $email);
+        $checkUser = $userRepository -> findOneByUsernameOrEmail($username, $email);
 
         //Check Unique Username / Password
         if ($checkUser) {

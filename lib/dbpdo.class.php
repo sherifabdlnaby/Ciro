@@ -1,6 +1,6 @@
 <?php
 
-//Singleton Class
+/* Singleton Class for PDO */
 class DBPdo
 {
     //Singleton Instance
@@ -24,6 +24,36 @@ class DBPdo
         // Return Connection (mysqli Object)
         return self::$connection;
     }
+
+    /**
+     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
+     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
+     * anymore is considered a good practice.
+     */
+    public static function closeConnection(){
+        //Check if instance exists
+        if(isset(self::$instance)){
+            //Closes connection
+            self::$connection = null;
+            //unset the instance, following connections will require re-connection to the DB.
+            self::$instance = null;
+        }
+    }
+
+    /**
+     * Private DB constructor(Singleton Pattern).
+     * @param $dsn
+     * @param $username
+     * @param $password
+     * @throws Exception if DB Connection failed.
+     */
+    private function __construct($dsn, $username, $password)
+    {
+        //If Error Occurred, Throws an Exception (caught at index.php).
+        self::$connection = new PDO($dsn, $username, $password);
+    }
+
+    /* HELPER FUNCTIONS */
 
     /**
      * Query and executes in DB directly, without passing a connection, will use default connection set in configurations.
@@ -73,34 +103,6 @@ class DBPdo
         return $connection -> quote($value);
     }
 
-    /**
-     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
-     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
-     * anymore is considered a good practice.
-     */
-    public static function closeConnection(){
-        //Check if instance exists
-        if(isset(self::$instance)){
-            //Closes connection
-            self::$connection = null;
-            //unset the instance, following connections will require re-connection to the DB.
-            self::$instance = null;
-        }
-    }
-
-    /**
-     * Private DB constructor(Singleton Pattern).
-     * @param $dsn
-     * @param $username
-     * @param $password
-     * @throws Exception if DB Connection failed.
-     */
-    private function __construct($dsn, $username, $password)
-    {
-        //If Error Occurred, Throws an Exception (caught at index.php).
-        self::$connection = new PDO($dsn, $username, $password);
-    }
-
     /* ensure true singleton */
     public function __clone()
     {
@@ -112,7 +114,7 @@ class DBPdo
         return false;
     }
 
-    //CONFIG Functions
+    /* Config Functions */
     public static function get($key){
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;
     }

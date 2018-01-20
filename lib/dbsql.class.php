@@ -1,13 +1,13 @@
 <?php
 
-//Singleton Class
+/* Singleton Class for MySqli */
 class DBSql
 {
-    //Singleton Instance
+    /* Singleton Instance */
     protected static $instance;
-    //MYSqLi Connection
+    /* MYSqLi Connection */
     protected static $connection;
-    //Settings array to hold MySQLi configurations via mysql.php
+    /* Settings array to hold MySQLi configurations via mysql.php */
     protected static $settings = array();
 
     /**
@@ -24,6 +24,40 @@ class DBSql
         // Return Connection (mysqli Object)
         return self::$connection;
     }
+
+    /**
+     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
+     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
+     * anymore is considered a good practice.
+     */
+    public static function closeConnection(){
+        //Check if instance exists
+        if(isset(self::$instance)){
+            //Closes connection
+            self::$connection -> close();
+            //unset the instance, following connections will require re-connection to the DB.
+            self::$instance = null;
+        }
+    }
+
+    /**
+     * Private DB constructor(Singleton Pattern).
+     * @param $host
+     * @param $user
+     * @param $password
+     * @param $db_name
+     * @throws Exception if DB Connection failed.
+     */
+    private function __construct($host, $user, $password, $db_name)
+    {
+        self::$connection = new mysqli($host, $user, $password, $db_name);
+
+        //If Error Occurred, Throw Exception
+        if (self::$connection->connect_errno !== 0)
+            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
+    }
+
+    /* HELPER FUNCTIONS */
 
     /**
      * Query the database directly without passing a connection.
@@ -72,38 +106,6 @@ class DBSql
     public static function quote($value) {
         $connection = self::getConnection();
         return "'" . $connection -> real_escape_string($value) . "'";
-    }
-
-    /**
-     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
-     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
-     * anymore is considered a good practice.
-     */
-    public static function closeConnection(){
-        //Check if instance exists
-        if(isset(self::$instance)){
-            //Closes connection
-            self::$connection -> close();
-            //unset the instance, following connections will require re-connection to the DB.
-            self::$instance = null;
-        }
-    }
-
-    /**
-     * Private DB constructor(Singleton Pattern).
-     * @param $host
-     * @param $user
-     * @param $password
-     * @param $db_name
-     * @throws Exception if DB Connection failed.
-     */
-    private function __construct($host, $user, $password, $db_name)
-    {
-        self::$connection = new mysqli($host, $user, $password, $db_name);
-
-        //If Error Occurred, Throw Exception
-        if (self::$connection->connect_errno !== 0)
-            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
     }
 
     /* ensure true singleton */

@@ -4,12 +4,12 @@ class UserRepository {
 
     public function __construct($connection = null)
     {
-        $this->connection = DBSql::getConnection();
+        $this->connection = DBPdo::getConnection();
     }
 
     /**
      * @param $id
-     * @return object|stdClass
+     * @return bool
      */
     public function find($id)
     {
@@ -17,14 +17,31 @@ class UserRepository {
         '
             SELECT * 
             FROM user 
-            WHERE _id = ?
+            WHERE id = :id
         ');
 
-        $query -> bind_param('s', $id);
+        $query -> bindparam(':id', $id);
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+
+        return $query -> fetch();
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll()
+    {
+        $query = $this->connection->prepare('
+            SELECT * FROM user
+        ');
+        $query->execute();
+
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+
+        return $query -> fetchAll();
     }
 
     /**
@@ -37,59 +54,47 @@ class UserRepository {
             "
             SELECT * 
             FROM user 
-            WHERE username = ?;
+            WHERE username = :username;
         ");
 
-        $query -> bind_param('s', $username);
+        $query -> bindparam(':username', $username);
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+
+        return $query -> fetch();
     }
 
     /**
-     * @param $usernameOrEmail
+     * @param $username
+     * @param $email
      * @return User|stdClass|null
      */
-    public function findByUsernameOrEmail($username, $email)
+    public function findOneByUsernameOrEmail($username, $email)
     {
         $query = $this-> connection -> prepare (
             "
             SELECT * 
             FROM user 
-            WHERE username = ? OR email = ?;
+            WHERE username = :username OR email = :email;
         ");
 
-        $query -> bind_param('ss', $username, $email);
+        $query -> bindparam(':username', $username);
+        $query -> bindparam(':email', $email);
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
-    }
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
 
-    /**
-     * @return array
-     */
-    public function findAll()
-    {
-        $query = $this->connection->prepare('SELECT * FROM user');
-
-        $query->execute();
-
-        $result = $query -> get_result();
-
-        $list = array();
-        while($tmpObj = $result -> fetch_object("User"))
-            array_push($list, $tmpObj);
-
-        return $list;
+        return $query -> fetch();
     }
 
     /**
      * @param User $user
-     * @return int:bool
+     * @return int last insert id:bool if failed;
+     * @throws Exception
      */
-    //TODO Check unique username and email
     public function create($user)
     {
         if (isset($user -> _id))
@@ -99,12 +104,15 @@ class UserRepository {
             INSERT INTO user 
                 (username, passwordHash, email, name) 
             VALUES 
-                (?, ? , ?, ?)
+                (:username, :passwordHash , :email, :name)
         ');
 
-        $query->bind_param('ssss', $user->username, $user->passwordHash,  $user->email, $user->name);
+        $query->bindParam(':username', $user->username);
+        $query->bindParam(':passwordHash', $user->passwordHash);
+        $query->bindParam(':email', $user->email);
+        $query->bindParam(':name', $user->name);
 
-        return $query->execute() ? $query -> insert_id : false;
+        return $query->execute() ? $this->connection->lastInsertId('user__id_seq') : false;
     }
 
     /**
@@ -117,36 +125,25 @@ class UserRepository {
         if (!isset($user->_id)) {
             // We can't update a record unless it exists...
             throw new Exception(
-                'Cannot update user that does not yet exist in the database.'
+                'Cannot update user!, user Id is null.'
             );
         }
 
         $query = $this->connection->prepare('
             UPDATE user
-            SET username = ?,
-                passwordHash = ?,
-                email = ?,
-                name = ?
-            WHERE _id = ?
+            SET username = :username,
+                passwordHash = :passwordHash,
+                email = :email,
+                name = :name
+            WHERE _id = :_id
         ');
 
-        $query->bind_param('sssss', $user->username, $user->passwordHash, $user->email, $user->name, $user->_id);
+        $query->bindParam(':username', $user->username);
+        $query->bindParam(':passwordHash', $user->passwordHash);
+        $query->bindParam(':name', $user->name);
+        $query->bindParam(':email', $user->email);
+        $query->bindParam(':_id', $user->_id);
 
-        return $query->execute();
-    }
-
-    /**
-     * @param User $user
-     * @return bool
-     * @throws Exception
-     */
-    public function deleteById($id)
-    {
-        $query = $this->connection->prepare('
-            DELETE FROM user
-            WHERE _id = ?
-        ');
-        $query -> bind_param('s', $id);
         return $query->execute();
     }
 }
