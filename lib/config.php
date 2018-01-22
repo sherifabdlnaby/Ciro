@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 class Config{
     protected static $settings = array();
 

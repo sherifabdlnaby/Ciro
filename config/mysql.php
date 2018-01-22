@@ -1,4 +1,5 @@
 <?php
+use Framework6800\Lib\DBSql;
 
 //Database Config Settings
 DBSql::set('mysql_host',    'localhost');

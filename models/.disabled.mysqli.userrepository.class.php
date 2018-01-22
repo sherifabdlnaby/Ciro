@@ -1,4 +1,7 @@
-<?php
+<?php namespace Framework6800\Models;
+
+use Framework6800\Lib\DBSql;
+
 class UserRepository {
     private $connection;
 
@@ -9,7 +12,7 @@ class UserRepository {
 
     /**
      * @param $id
-     * @return object|stdClass
+     * @return object|\stdClass
      */
     public function find($id)
     {
@@ -24,12 +27,12 @@ class UserRepository {
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
+        return $query -> get_result() -> fetch_object(User::class);
     }
 
     /**
      * @param $username
-     * @return User|stdClass|null
+     * @return User|\stdClass|null
      */
     public function findByUsername($username)
     {
@@ -44,12 +47,13 @@ class UserRepository {
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
+        return $query -> get_result() -> fetch_object(User::class);
     }
 
     /**
-     * @param $usernameOrEmail
-     * @return User|stdClass|null
+     * @param $username
+     * @param $email
+     * @return User|\stdClass|null
      */
     public function findOneByUsernameOrEmail($username, $email)
     {
@@ -64,7 +68,7 @@ class UserRepository {
 
         $query -> execute();
 
-        return $query -> get_result() -> fetch_object("User");
+        return $query -> get_result() -> fetch_object(User::class);
     }
 
     /**
@@ -79,7 +83,7 @@ class UserRepository {
         $result = $query -> get_result();
 
         $list = array();
-        while($tmpObj = $result -> fetch_object("User"))
+        while($tmpObj = $result -> fetch_object(User::class))
             array_push($list, $tmpObj);
 
         return $list;
@@ -88,8 +92,8 @@ class UserRepository {
     /**
      * @param User $user
      * @return int:bool
+     * @throws \Exception
      */
-    //TODO Check unique username and email
     public function create($user)
     {
         if (isset($user -> _id))
@@ -110,13 +114,13 @@ class UserRepository {
     /**
      * @param User $user
      * @return bool
-     * @throws Exception
+     * @throws /Exception
      */
     public function update($user)
     {
         if (!isset($user->_id)) {
             // We can't update a record unless it exists...
-            throw new Exception(
+            throw new \Exception(
                 'Cannot update user that does not yet exist in the database.'
             );
         }
@@ -138,7 +142,7 @@ class UserRepository {
     /**
      * @param User $user
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function deleteById($id)
     {

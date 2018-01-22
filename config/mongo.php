@@ -1,4 +1,7 @@
 <?php
+
+use Framework6800\Lib\DBMongo;
+
 //MongoDB Config Settings
 DBMongo::set('mongo_db_default_name',   'default_database');
 DBMongo::set('mongo_server'         ,   'mongodb://localhost:27017');

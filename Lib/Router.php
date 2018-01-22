@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 class Router{
     protected $uri;             // Uri
     protected $route;           // Request route
@@ -55,11 +57,17 @@ class Router{
 
         if(count($path_parts))
         {
-            //Get Route from first part if exits
-            if( in_array(strtolower(current($path_parts)), array_keys($routes))){
-                $this->route = strtolower(current($path_parts));
-                $this->routePrefix = $routes[$this->route];
-                array_shift($path_parts);
+            //Get Route from first part if exits (strtolower for case insensitivity)
+            $currentPart = strtolower(current($path_parts));
+            foreach ($routes as $routeName => &$routePrefix)
+            {
+                if(strcasecmp($routeName, $currentPart) === 0)
+                {
+                    $this->route = $routeName;
+                    $this->routePrefix = $routePrefix;
+                    array_shift($path_parts);
+                    break;
+                }
             }
 
             //Get Controller

@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 class View{
     protected $data;
     protected $meta;
@@ -10,12 +12,12 @@ class View{
      * @param $data
      * @param $path
      * @param null $meta
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(&$data, $path, &$meta = null)
     {
         if(!file_exists($path))
-            throw new Exception("Template not found at ".$path);
+            throw new \Exception("Template not found at ".$path);
 
         $this->path = $path;
         $this->data = $data;

@@ -1,4 +1,7 @@
-<?php
+<?php namespace Framework6800\Models;
+
+
+use Framework6800\Lib\Session;
 
 class RegisterService{
     /**

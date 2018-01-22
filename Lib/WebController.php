@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 class WebController extends Controller {
     protected $meta;
 
@@ -16,7 +18,7 @@ class WebController extends Controller {
         $this->meta = $meta;
     }
 
-    /** Render controller, default view is rendered if no path specified.
+    /** Render controller, Web view is rendered if no path specified.
      * @param null $layout
      * @param null $viewPath
      * @param null $data
@@ -25,11 +27,11 @@ class WebController extends Controller {
      */
     function render($layout = null, $viewPath = null, &$data = null, &$meta = null){
 
-        ///If no specific Layout no, use default Layout.
+        ///If no specific Layout no, use Web Layout.
         if(!$layout)
             $layout = Config::get('default_layout');
 
-        //If no specific viewPath is passed, use default Path instead.
+        //If no specific viewPath is passed, use Web Path instead.
         if(!$viewPath)
             $viewPath = View::getDefaultViewPath();
 
@@ -75,8 +77,11 @@ class WebController extends Controller {
             Session::unsetAllAlerts();
         }
 
+        //Creates an array that contains Layouts required data $x['meta'], $x['header'], etc
+        $renderData = compact('meta','header','alerts','content', 'footer');
+
         //Render Full Layout
-        $layoutView = new View(compact('meta','header','alerts','content', 'footer'), $layoutPath);
+        $layoutView = new View($renderData, $layoutPath);
 
         //Return Full Rendered Page3
         return $layoutView -> render();

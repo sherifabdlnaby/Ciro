@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 /* Singleton Class for PDO */
 class DBPdo
 {
@@ -13,7 +15,7 @@ class DBPdo
     /**
      * Return PDO object connected using config defaults in pdo.php.
      * (Singleton connection)
-     * @return PDO
+     * @return \PDO
      */
     public static function getConnection()
     {
@@ -45,21 +47,21 @@ class DBPdo
      * @param $dsn
      * @param $username
      * @param $password
-     * @throws Exception if DB Connection failed.
+     * @throws \Exception if DB Connection failed.
      */
     private function __construct($dsn, $username, $password)
     {
         //If Error Occurred, Throws an Exception (caught at index.php).
-        self::$connection = new PDO($dsn, $username, $password);
+        self::$connection = new \PDO($dsn, $username, $password);
     }
 
     /* HELPER FUNCTIONS */
 
     /**
-     * Query and executes in DB directly, without passing a connection, will use default connection set in configurations.
+     * Query and executes in DB directly, without passing a connection, will use Web connection set in configurations.
      * @param $query string.
      * @param null $bindValues
-     * @return PDOStatement|bool false if query failed to execute
+     * @return \PDOStatement|bool false if query failed to execute
      */
     public static function query($query, $bindValues = null) {
         // Connect to the database

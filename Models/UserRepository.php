@@ -1,4 +1,8 @@
-<?php
+<?php namespace Framework6800\Models;
+
+use Framework6800\Lib\DBPdo;
+use PDO;
+
 class UserRepository {
     private $connection;
 
@@ -24,7 +28,7 @@ class UserRepository {
 
         $query -> execute();
 
-        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, User::class);
 
         return $query -> fetch();
     }
@@ -39,14 +43,14 @@ class UserRepository {
         ');
         $query->execute();
 
-        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, User::class);
 
         return $query -> fetchAll();
     }
 
     /**
      * @param $username
-     * @return User|stdClass|null
+     * @return User|\stdClass|null
      */
     public function findByUsername($username)
     {
@@ -60,8 +64,8 @@ class UserRepository {
         $query -> bindparam(':username', $username);
 
         $query -> execute();
-
-        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+                
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, User::class);
 
         return $query -> fetch();
     }
@@ -69,7 +73,7 @@ class UserRepository {
     /**
      * @param $username
      * @param $email
-     * @return User|stdClass|null
+     * @return User|\stdClass|null
      */
     public function findOneByUsernameOrEmail($username, $email)
     {
@@ -85,7 +89,7 @@ class UserRepository {
 
         $query -> execute();
 
-        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+        $query->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, User::class);
 
         return $query -> fetch();
     }
@@ -93,7 +97,7 @@ class UserRepository {
     /**
      * @param User $user
      * @return int last insert id:bool if failed;
-     * @throws Exception
+     * @throws \Exception
      */
     public function create($user)
     {
@@ -118,13 +122,13 @@ class UserRepository {
     /**
      * @param User $user
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function update($user)
     {
         if (!isset($user->_id)) {
             // We can't update a record unless it exists...
-            throw new Exception(
+            throw new \Exception(
                 'Cannot update user!, user Id is null.'
             );
         }

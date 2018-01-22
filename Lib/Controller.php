@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 abstract class  Controller{
     protected $data;
     protected $model;
@@ -20,6 +22,7 @@ abstract class  Controller{
 
     /** Redirect User to the given path.
      * @param $path
+     * @return null
      */
     function redirect($path)
     {

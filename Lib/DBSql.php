@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 /* Singleton Class for MySqli */
 class DBSql
 {
@@ -13,7 +15,7 @@ class DBSql
     /**
      * Return mysqli object connected using config defaults.
      * (Singleton connection)
-     * @return mysqli
+     * @return \mysqli
      */
     public static function getConnection()
     {
@@ -46,15 +48,15 @@ class DBSql
      * @param $user
      * @param $password
      * @param $db_name
-     * @throws Exception if DB Connection failed.
+     * @throws \Exception if DB Connection failed.
      */
     private function __construct($host, $user, $password, $db_name)
     {
-        self::$connection = new mysqli($host, $user, $password, $db_name);
+        self::$connection = new \mysqli($host, $user, $password, $db_name);
 
         //If Error Occurred, Throw Exception
         if (self::$connection->connect_errno !== 0)
-            throw new Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
+            throw new \Exception('Error Connecting to MySQL Database, Error: ' . self::$connection->connect_error);
     }
 
     /* HELPER FUNCTIONS */
@@ -62,7 +64,7 @@ class DBSql
     /**
      * Query the database directly without passing a connection.
      * @param $query string.
-     * @return mysqli_result object for SELECT and equivalent queries, True for successful queries, False if otherwise.
+     * @return \mysqli_result object for SELECT and equivalent queries, True for successful queries, False if otherwise.
      */
     public static function query($query) {
         // Connect to the database

@@ -1,4 +1,5 @@
-<?php
+<?php namespace Framework6800\Models;
+
 class User {
     public $_id;
     public $username;

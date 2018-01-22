@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework6800\Lib;
+
 class Session
 {
     /** Saved Parameters to Session var for Login
