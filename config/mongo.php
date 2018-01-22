@@ -1,6 +1,6 @@
 <?php
 
-use Framework6800\Lib\DBMongo;
+use Framework6800\Core\DBMongo;
 
 //MongoDB Config Settings
 DBMongo::set('mongo_db_default_name',   'default_database');

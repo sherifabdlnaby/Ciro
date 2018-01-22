@@ -1,6 +1,6 @@
 <?php namespace Framework6800\Models;
 
-use Framework6800\Lib\DBPdo;
+use Framework6800\Core\DBPdo;
 use PDO;
 
 class UserRepository {

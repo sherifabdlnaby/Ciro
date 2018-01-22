@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework6800\Lib;
+namespace Framework6800\Core;
 
 class Config{
     protected static $settings = array();

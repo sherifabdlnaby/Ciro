@@ -1,7 +1,7 @@
 <?php namespace Framework6800\Controllers\Web;
 
-use Framework6800\Lib\Session;
-use Framework6800\Lib\WebController;
+use Framework6800\Core\Session;
+use Framework6800\Core\WebController;
 use Framework6800\Models\LoginService;
 use Framework6800\Models\RegisterService;
 use Framework6800\Models\UserRepository;

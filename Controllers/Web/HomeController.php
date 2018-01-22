@@ -1,6 +1,6 @@
 <?php
 namespace Framework6800\Controllers\Web;
-use Framework6800\Lib\WebController;
+use Framework6800\Core\WebController;
 
 /*
  * Class Name should match this pattern {Route Prefix}{Controller Name}Controller

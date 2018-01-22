@@ -1,5 +1,5 @@
 <?php
-use Framework6800\Lib\Route;
+use Framework6800\Core\Route;
 
 /*
  * - Route Parameters should be surrounded by '{  }', e.g( {name} ).

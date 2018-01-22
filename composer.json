@@ -1,13 +1,13 @@
 {
-
   "autoload": {
     "psr-4": {
       "Framework6800\\" : "."
     }
   },
-
   "config": {
     "vendor-dir": "Vendor"
+  },
+  "require": {
+    "mongodb/mongodb": "^1.2"
   }
-
 }

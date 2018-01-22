@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework6800\Lib;
+namespace Framework6800\Core;
 
 abstract class  Controller{
     protected $data;
