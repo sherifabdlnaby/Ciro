@@ -6,8 +6,8 @@ namespace Framework6800\Core;
 class DBMongo{
     //Singleton Instance
     protected static $instance;
-    //Mongo Connection
-    protected static $connection;
+    //Mongo Client Connection
+    protected static $client;
     //Settings array to hold Mongo configurations set via mongo.php
     protected static $settings = array();
 
@@ -17,26 +17,26 @@ class DBMongo{
     private function __construct()
     {
         //Throws MongoConnectionException if Failed to Connect.
-        self::$connection = new \MongoClient(self::get('mongo_server'), self::get('mongo_connect_options'));
+        self::$client = new \MongoDB\Client("mongodb://localhost:27017");
     }
 
     /**
      * Return a MongoClient connection.
-     * @return \MongoClient
+     * @return \MongoDB\Client
      */
     public static function getMongoClient()
     {
         if(!isset(self::$instance))
             self::$instance = new self();
 
-        return self::$connection;
+        return self::$client;
     }
 
     /**
-     * Returns a MongoDB object, if no $dbName specified return Web db specified in config.
+     * Returns a Mongo Database Object, if no $dbName specified return Web db specified in config.
      * if a $dbName of a db that doesn't exist, Mongo creates a new db of that name.
      * @param null $dbName
-     * @return \MongoDB
+     * @return \MongoDB\Database
      */
     public static function getMongoDB($dbName = null)
     {
@@ -51,12 +51,12 @@ class DBMongo{
     /**
      * @param $collectionName
      * @param null $dbName
-     * @return \MongoCollection
+     * @return \MongoDB\Collection
      * @throws \Exception if Collection name doesn't match config, MongoConnectionException if connection failed.
      */
     public static function getCollection($collectionName, $dbName = null)
     {
-        //If Null passed, getDatabase return default DB from Config
+        //If Null passed, getDatabase returns the default DB from Config
         $db = self::getMongoDB($dbName);
 
         //To Avoid creating unwanted collection when passing wrong $collection Name
@@ -70,18 +70,11 @@ class DBMongo{
     }
 
     /**
-     * Close Connection if exists, Closing connection is Optional, connections are automatically(pooled) closed when php script
-     * ends, however if the PHP script will process stuff for long periods, closing connection earlier after not needed
-     * anymore is considered a good practice.
+     * Return a new Mongo Object ID in string format.
+     * @return string
      */
-    public static function closeConnection(){
-        //Check if instance exists
-        if(isset(self::$instance)){
-            //Closes connection
-            self::$connection -> close();
-            //unset the instance, following connections will require re-connection to the DB.
-            self::$instance = null;
-        }
+    public static function getNewObjectId(){
+        return (string) (new \MongoDB\BSON\ObjectID());
     }
 
     /* ensure true singleton */

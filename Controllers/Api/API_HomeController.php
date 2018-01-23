@@ -1,4 +1,4 @@
-<?php namespace Framework6800\Controllers\API;
+<?php namespace Framework6800\Controllers\Api;
 use Framework6800\Core\ApiController;
 
 /*

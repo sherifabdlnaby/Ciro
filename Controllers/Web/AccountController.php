@@ -51,6 +51,7 @@ class AccountController extends WebController {
         return $this->render();
     }
 
+
     public function logout(){
         Session::destroyLoginSession();
         if(!empty($_GET['returnUrl']))

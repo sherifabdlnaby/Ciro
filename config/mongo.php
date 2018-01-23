@@ -9,6 +9,6 @@ DBMongo::set('mongo_connect_options',    array("connect" => true));
 
 //Default Collections names
 // (Exception thrown if dev used another collection other than what's specified here)
-DBMongo::set('collections', array(  'Users',
-                                    'Item'
+DBMongo::set('collections', array(  'user',
+                                    'item'
                                 ));

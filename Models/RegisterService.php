@@ -12,6 +12,7 @@ class RegisterService{
      * @param $confirmPassword
      * @param $email
      * @return bool
+     * @throws \Exception
      */
     //TODO Handle how to cleanly send error messages to form and VALIDATE form.
     public static function Register($name, $username, $password, $confirmPassword, $email)
