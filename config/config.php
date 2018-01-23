@@ -1,6 +1,6 @@
 <?php
 
-use Framework6800\Core\Config;
+use App\Core\Config;
 
 /* Names, constants, and stuff. */
 Config::set('site_name', 'PHP Framework');

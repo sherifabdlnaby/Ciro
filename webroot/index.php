@@ -1,6 +1,6 @@
 <?php
 
-use Framework6800\Core\App;
+use App\Core\App;
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));

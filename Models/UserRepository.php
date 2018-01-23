@@ -1,6 +1,6 @@
-<?php namespace Framework6800\Models;
+<?php namespace App\Models;
 
-use Framework6800\Core\DBSql;
+use App\Core\DBSql;
 
 class UserRepository {
     private $connection;

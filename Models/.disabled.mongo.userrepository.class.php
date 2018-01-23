@@ -1,7 +1,7 @@
 <?php
 
-namespace Framework6800\Models;
-use Framework6800\Core\DBMongo;
+namespace App\Models;
+use App\Core\DBMongo;
 
 /*Rename Class to 'UserRepository' */
 class UserRepository {

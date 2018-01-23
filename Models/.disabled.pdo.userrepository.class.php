@@ -1,6 +1,6 @@
-<?php namespace Framework6800\Models;
+<?php namespace App\Models;
 
-use Framework6800\Core\DBPdo;
+use App\Core\DBPdo;
 use PDO;
 
 /*Rename Class to 'UserRepository' */

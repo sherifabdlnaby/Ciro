@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework6800\Core;
+namespace App\Core;
 
 class View{
     protected $data;

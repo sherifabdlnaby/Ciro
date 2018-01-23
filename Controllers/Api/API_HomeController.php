@@ -1,5 +1,5 @@
-<?php namespace Framework6800\Controllers\Api;
-use Framework6800\Core\ApiController;
+<?php namespace App\Controllers\Api;
+use App\Core\ApiController;
 
 /*
  * Class Name should match this pattern {Route Prefix}{Controller Name}Controller

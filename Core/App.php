@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework6800\Core;
+namespace App\Core;
 
 class App{
     protected static $router;
@@ -16,7 +16,7 @@ class App{
         //ClassName = RoutePrefix + Url Controller + 'Controller'
         $bareClassName = self::$router->getRoutePrefix().self::$router->getController().'Controller';
         //Add Name space to have a fully qualified Controller Class name.
-        $controllerClass = '\\Framework6800\\Controllers\\'.self::$router -> getRoute().'\\'.$bareClassName;
+        $controllerClass = '\\App\\Controllers\\'.self::$router -> getRoute().'\\'.$bareClassName;
         //Controller's Method to be called
         $controllerMethod = self::$router->getAction();
 

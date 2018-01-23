@@ -1,7 +1,7 @@
-<?php namespace Framework6800\Models;
+<?php namespace App\Models;
 
 
-use Framework6800\Core\Session;
+use App\Core\Session;
 
 class LoginService{
     /**

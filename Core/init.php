@@ -1,6 +1,6 @@
 <?php
 
-use Framework6800\Core\Config;
+use App\Core\Config;
 
 //Composer Autoload using PSR-4
 require_once (ROOT.DS.'Vendor/autoload.php');

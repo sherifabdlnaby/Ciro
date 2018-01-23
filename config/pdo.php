@@ -1,5 +1,5 @@
 <?php
-use Framework6800\Core\DBPdo;
+use App\Core\DBPdo;
 
 //Database Config Settings
 DBPdo::set('dsn',   'mysql:host=localhost;dbname=default_database');

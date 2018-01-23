@@ -1,10 +1,10 @@
-<?php namespace Framework6800\Controllers\Web;
+<?php namespace App\Controllers\Web;
 
-use Framework6800\Core\Session;
-use Framework6800\Core\WebController;
-use Framework6800\Models\LoginService;
-use Framework6800\Models\RegisterService;
-use Framework6800\Models\UserRepository;
+use App\Core\Session;
+use App\Core\WebController;
+use App\Models\LoginService;
+use App\Models\RegisterService;
+use App\Models\UserRepository;
 
 /*
  * Class Name should match this pattern {Route Prefix}{Controller Name}Controller
