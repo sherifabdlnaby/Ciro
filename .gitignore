@@ -1,4 +1,6 @@
 
 /.idea
 **/.DS_Store
-/Vendor/
+/Vendor/*
+!Vendor/composer
+!Vendor/autoload.php
