@@ -4,7 +4,7 @@ use App\Core\DBPdo;
 use PDO;
 
 /*Rename Class to 'UserRepository' */
-class _disabledUserRepository {
+class _disabled1UserRepository {
     private $connection;
 
     public function __construct($connection = null)

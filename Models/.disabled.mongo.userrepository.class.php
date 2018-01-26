@@ -4,7 +4,7 @@ namespace App\Models;
 use App\Core\DBMongo;
 
 /*Rename Class to 'UserRepository' */
-class UserRepository {
+class _disabled2UserRepository {
 
     private $mongoClient;
     private $collection;

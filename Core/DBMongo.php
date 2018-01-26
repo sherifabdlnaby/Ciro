@@ -52,21 +52,11 @@ class DBMongo{
      * @param $collectionName
      * @param null $dbName
      * @return \MongoDB\Collection
-     * @throws \Exception if Collection name doesn't match config, MongoConnectionException if connection failed.
      */
     public static function getCollection($collectionName, $dbName = null)
     {
         //If Null passed, getDatabase returns the default DB from Config
-        $db = self::getMongoDB($dbName);
-
-        //To Avoid creating unwanted collection when passing wrong $collection Name
-        //Search for $Collection in set of available Collection (Initialized by config)
-        $search = array_search($collectionName, self::get('collections'));
-
-        if($search !== FALSE)
-            return $db -> $collectionName;
-
-        throw new \Exception("No Collection with the Name: ". $collectionName.', Please check that Name matches config file.');
+        return self::getMongoDB($dbName) -> $collectionName;
     }
 
     /**

@@ -140,9 +140,8 @@ class UserRepository {
     }
 
     /**
-     * @param User $user
+     * @param $id
      * @return bool
-     * @throws \Exception
      */
     public function deleteById($id)
     {

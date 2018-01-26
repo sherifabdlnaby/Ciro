@@ -9,12 +9,7 @@ class User {
 
     /**
      * User constructor.
-     * @param $username
-     * @param $passwordHash
-     * @param $email
-     * @param $name
-     * @param $phoneNumber
-     * @param null $_id
+     * @param null $data
      */
     public function __construct($data = null)
     {
