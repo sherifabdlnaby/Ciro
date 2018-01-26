@@ -1,17 +1,19 @@
 <?php
 
+use App\Core\App;
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
-define('CONFIG_PATH', ROOT.DS.'config');
-define('LIBRARY_PATH', ROOT.DS.'lib');
-define('MODEL_PATH', ROOT.DS.'models');
-define('VIEW_PATH', ROOT.DS.'views');
-define('CONTROLLER_PATH', ROOT.DS.'controllers');
-define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_layouts');
-define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_full_errors');
+define('CONFIG_PATH', ROOT.DS.'Config');
+define('CORE_PATH', ROOT.DS.'Core');
+define('MODEL_PATH', ROOT.DS.'Models');
+define('VIEW_PATH', ROOT.DS.'Views');
+define('CONTROLLER_PATH', ROOT.DS.'Controllers');
+define('LAYOUT_VIEW_PATH', VIEW_PATH.DS.'_Layouts');
+define('ERROR_VIEW_PATH', VIEW_PATH.DS.'_Full_Errors');
 
 //INITIALIZE
-require_once(ROOT.DS.'lib'.DS.'init.php');
+require_once(CORE_PATH.DS.'init.php');
 
 try {
     App::run($_SERVER["REQUEST_URI"]);

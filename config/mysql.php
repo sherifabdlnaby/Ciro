@@ -1,4 +1,5 @@
 <?php
+use App\Core\DBSql;
 
 //Database Config Settings
 DBSql::set('mysql_host',    'localhost');
