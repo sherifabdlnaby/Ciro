@@ -1,8 +1,7 @@
 <?php
-
 use App\Core\Config;
 
-/* Names, constants, and stuff. */
+/* Names, constants, and stuff that will be used in the code later. */
 Config::set('site_name', 'PHP Framework');
 
 /* Optional Settings */
@@ -12,10 +11,8 @@ Config::set('use_mongo_db', true);
 Config::set('use_custom_routes', true);
 Config::set('use_global_session', true);    // <-- Start Session at start of every script.
 
-
 /* Default layout used for views if no specific layout mentioned. */
 Config::set('default_layout', 'default');
-
 
 /* Routing defaults
  * -> Web route must match a route defined at routes table below. */

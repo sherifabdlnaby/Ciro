@@ -10,7 +10,7 @@ define('MODEL_PATH',    ROOT.DS.'Models');
 define('VIEW_PATH',     ROOT.DS.'Views');
 define('CONTROLLER_PATH',   ROOT.DS.'Controllers');
 define('LAYOUT_VIEW_PATH',  VIEW_PATH.DS.'_Layouts');
-define('ERROR_VIEW_PATH',   VIEW_PATH.DS.'_Full_Errors');
+define('MESSAGE_VIEW_PATH', VIEW_PATH.DS.'_FullMessages');
 
 //INITIALIZE
 require_once(CORE_PATH.DS.'init.php');
