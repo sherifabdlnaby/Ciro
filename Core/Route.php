@@ -48,7 +48,7 @@ class Route
      * @param $routes
      * @return false if not matched | routeAttributes array() if matched.
      */
-    public static function routeMatch(&$path_parts, &$routes)
+    private static function routeMatch(&$path_parts, &$routes)
     {
         foreach ($routes as $route => $routeAttributes) {
             //--Compare Matching Pattern--
@@ -61,12 +61,10 @@ class Route
                 continue;
 
             //Start Matching
-            $i = 0;
             $matching = true;
-            $params = array();
-            foreach ($route_parts as $route_part) {
+            foreach ($route_parts as $i => $route_part) {
                 //Check if a parameter .../{xxx}/....
-                if ($route_part[0] === '{' && $route_part[strlen($route_part) - 1] === '}') {
+                if (self::isRouteVar($route_part)) {
                     //if no longer parts in path -> if optional param -> continue, else, it doesn't match -> break;
                     if ($i >= count($path_parts)) {
                         if ($route_part[strlen($route_part) - 2] === '?')
@@ -76,8 +74,6 @@ class Route
                             break;
                         }
                     }
-                    //Collect Params
-                    array_push($params, $path_parts[$i]);
                 }
                 //1st condition -> Reaching here and having i >= path parts therefore doesn't match, hence break;.
                 //2nd condition -> Reaching here and having $route_part not equal $path_parts[i] therefore doesn't match, hence break;.
@@ -85,74 +81,146 @@ class Route
                     $matching = false;
                     break;
                 }
-
-                //Increment Path Iterator
-                ++$i;
             }
 
             //If above for-loop yielded a matching route, extract attributes and add params -> return.
             if ($matching === true) {
+
+                $params = array();
+
+                foreach ($route_parts as $i => &$part)
+                {
+                    if(self::isRouteVar($part) && $i < count($path_parts) )
+                        if($part === $routeAttributes['route'])
+                            $routeAttributes['route'] = $path_parts[$i];
+                        elseif ($part === $routeAttributes['controller'])
+                            $routeAttributes['controller'] = $path_parts[$i];
+                        elseif ($part === $routeAttributes['action'])
+                            $routeAttributes['action'] = $path_parts[$i];
+                        else
+                            array_push($params,  $path_parts[$i]);
+                }
+
+                //Add Params
                 $routeAttributes['params'] = $params;
+
                 return $routeAttributes;
             }
-
         }
         return false;
     }
 
-    public static function Get($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the GET requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Get($uri, $route, $controller, $action)
     {
-        self::$GetRoutes[$key] = array(
+        self::$GetRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function Post($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the POST requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Post($uri, $route, $controller, $action)
     {
-        self::$PostRoutes[$key] = array(
+        self::$PostRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function Put($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the PUT requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Put($uri, $route, $controller, $action)
     {
-        self::$PutRoutes[$key] = array(
+        self::$PutRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function Patch($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the PATCH requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Patch($uri, $route, $controller, $action)
     {
-        self::$PatchRoutes[$key] = array(
+        self::$PatchRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function Delete($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the DELETE requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Delete($uri, $route, $controller, $action)
     {
-        self::$DeleteRoutes[$key] = array(
+        self::$DeleteRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function Options($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all the OPTIONS requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function Options($uri, $route, $controller, $action)
     {
-        self::$OptionsRoutes[$key] = array(
+        self::$OptionsRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
     }
 
-    public static function All($key, $route, $controller, $action)
+    /**
+     * routes the given $uri to the specified route / controller / action to all requests.
+     * @param $uri
+     * @param $route
+     * @param $controller
+     * @param $action
+     */
+    public static function All($uri, $route, $controller, $action)
     {
-        self::$AllRoutes[$key] = array(
+        self::$AllRoutes[$uri] = array(
             'route' => $route,
             'controller' => $controller,
             'action' => $action);
+    }
+
+    /**
+     * Check if $part is a Route Variable(has {})
+     * @param $part
+     * @return bool
+     */
+    private static function isRouteVar($part){
+        return count($part) > 1 && $part[0] === '{' && $part[strlen($part) - 1] === '}';
     }
 }

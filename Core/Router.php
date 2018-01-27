@@ -33,11 +33,11 @@ class Router{
         //get routes.
         $routes = Config::get('routes');
 
-        //CUSTOM ROUTING
-        ///Check if parts matches a custom Route parts.
-        ///Return false if no custom routes matched, else return attributes array 'route','controller','action', 'params'.
-        $customRouteAttributes = Route::CustomRouteMatch($path_parts);
-        if($customRouteAttributes !== false)
+        /* CUSTOM ROUTING (If enabled)
+        *  Check if parts matches a custom Route parts.
+        *  Return false if no custom routes matched, else return attributes array 'route','controller','action', 'params'. */
+        if(Config::get('use_custom_routes') &&
+            $customRouteAttributes = Route::CustomRouteMatch($path_parts) !== false)
         {
             $this -> route = $customRouteAttributes['route'];
             $this -> routePrefix = $routes[$this->route];
@@ -48,7 +48,8 @@ class Router{
             return;
         }
 
-        //if reached here -> DEFAULT ROUTING
+        /* if reached here -> DEFAULT ROUTING */
+
         //Load Defaults
         $this -> route = Config::get('default_route');
         $this -> routePrefix = $routes[$this->route];
@@ -57,8 +58,8 @@ class Router{
 
         if(count($path_parts))
         {
-            //Get Route from first part if exits (strtolower for case insensitivity)
-            $currentPart = strtolower(current($path_parts));
+            //Get Route from first part if exits
+            $currentPart = current($path_parts);
             foreach ($routes as $routeName => &$routePrefix)
             {
                 if(strcasecmp($routeName, $currentPart) === 0)
