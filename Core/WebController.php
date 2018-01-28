@@ -18,6 +18,7 @@ class WebController extends Controller
     {
         parent::__construct($data, $model, $params);
         $this->meta = $meta;
+        $this->meta['title'] = Config::get('title');
     }
 
     /** Render controller, Web view is rendered if no path specified.

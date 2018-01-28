@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers\Web;
+
 use App\Core\WebController;
 
 /*
@@ -14,6 +15,8 @@ class HomeController extends WebController {
     }
 
     public function About(){
+        //Set title of About page.
+        $this->meta['title'] = 'About · Ciro';
         return $this->render();
     }
 }

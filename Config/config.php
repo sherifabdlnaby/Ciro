@@ -2,7 +2,7 @@
 use App\Core\Config;
 
 /* Names, constants, and stuff that will be used in the code later. */
-Config::set('site_name', 'PHP Framework');
+Config::set('title', 'Ciro');
 
 /* Optional Settings (Flags) */
 

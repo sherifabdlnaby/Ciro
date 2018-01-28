@@ -64,14 +64,12 @@ class AccountController extends WebController {
 
         $user = $userRepository -> findByUsername($username);
 
-        $xas = $eafas;
-
         //Compare Information
         if($user){
-            $this -> data['_id'] = &$user->_id;
             $this -> data['username'] = &$user->username;
             $this -> data['name'] = &$user->name;
             $this -> data['email'] = &$user->email;
+            $this -> meta['title'] = &$user->name;
             return $this->render();
         }
         else{
