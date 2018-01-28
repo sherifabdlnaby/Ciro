@@ -64,6 +64,8 @@ class AccountController extends WebController {
 
         $user = $userRepository -> findByUsername($username);
 
+        $xas = $eafas;
+
         //Compare Information
         if($user){
             $this -> data['_id'] = &$user->_id;

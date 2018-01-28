@@ -4,13 +4,26 @@ use App\Core\Config;
 /* Names, constants, and stuff that will be used in the code later. */
 Config::set('site_name', 'PHP Framework');
 
-/* Optional Settings */
-Config::set('use_mysql_db', true);
-Config::set('use_pdo_db', true);
-Config::set('use_mongo_db', true);
-Config::set('use_custom_routes', true);
-Config::set('use_global_session', true);    // <-- Start Session at start of every script.
+/* Optional Settings (Flags) */
 
+/* Loads mysqli configurations set at Config/mysqli.php  */
+Config::set('use_mysqli_db', true);
+/* Loads MongoDB configurations set at Config/pdo.php  */
+Config::set('use_pdo_db', true);
+/* Loads MongoDB configurations set at Config/mongo.php  */
+Config::set('use_mongo_db', true);
+/* Enable custom routes, any uri that matches routes set at Config/routes.php will be routed accordingly */
+Config::set('use_custom_routes', true);
+/* Start Session at start of every script. */
+Config::set('use_global_session', true);
+/* Handle Exceptions and Errors, optionally logs them, catch errors and throw them as an ErrorException.
+   Also Prints a 500 : Internal Server error custom error page for the user. */
+Config::set('use_exception_handler', true);
+/* log exceptions and errors if exception handler is used  */
+Config::set('log_exceptions_errors', true);
+/* Exception Handler log file destination to be used if logging exceptions & errors is enabled.
+ (beware not to put log file in Webroot/ public directory, always use ROOT constant as a base) */
+Config::set('exception_handler_log_destination', ROOT.DS.'exception_handler_log.log');
 /* Default layout used for views if no specific layout mentioned. */
 Config::set('default_layout', 'default');
 

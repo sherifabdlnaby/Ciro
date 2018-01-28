@@ -15,11 +15,5 @@ define('MESSAGE_VIEW_PATH', VIEW_PATH.DS.'_FullMessages');
 //INITIALIZE
 require_once(CORE_PATH.DS.'init.php');
 
-try {
-    App::run($_SERVER["REQUEST_URI"]);
-}
-catch(Exception $e)
-{
-    print_r("EXCEPTION : ".$e -> getMessage());
-}
-
+//RUN
+App::run($_SERVER["REQUEST_URI"]);

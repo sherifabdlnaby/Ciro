@@ -7,7 +7,6 @@ class App{
 
     /**
      * @param $uri
-     * @throws \Exception
      */
     public static function run(&$uri)
     {
@@ -26,27 +25,16 @@ class App{
             $controllerObject = new $controllerClass();
 
         //Check if Controller and Action Exists in our code
-        if(method_exists($controllerObject, $controllerMethod)) {
-            //RUN Controller
-            $controllerOutput = call_user_func_array(array($controllerObject, $controllerMethod), self::$router -> getParams());
-            //echo Controller's output (This is our final result)
-            echo $controllerOutput;
-            //Exit Script.
-            exit();
-        }
+        if(method_exists($controllerObject, $controllerMethod))
+              /* RUN Controller */
+            $controllerOutput = $controllerObject -> $controllerMethod(...self::$router -> getParams());
+        else  /* REACHING HERE means -> Routing Failed. Output full Error and send status code 404 */
+            $controllerOutput = self::renderFullError("Can't Resolve URL", 404);
 
-        /* REACHING HERE means -> Routing Failed. */
-
-        /* If Failed to be Routed via a Custom Route, throw exception
-         (It's developer's responsibility to route custom routes to correct Controller and Method.). */
-        if(self::$router->isCustomRoute())
-            throw new \Exception("Route handled by Custom Route failed, Can't find Action: '".self::$router->getAction()."', Controller: '".self::$router->getController()."', Route: '".self::$router->getRoute()."'. Please check route parameters at route.php.");
-
-        /* If Routed via Default Route (User entering incorrect URL)
-           (SEND 404 NOT FOUND Web-page {WEB}) */
-        $controllerObject = new WebController();
-        $controllerOutput = $controllerObject -> renderFullError('Page Not Found', 404);
+        //echo Controller's output (This is our final result)
         echo $controllerOutput;
+
+        //Exit Script.
         exit();
     }
 
@@ -56,6 +44,18 @@ class App{
     public static function getRouter()
     {
         return self::$router;
+    }
+
+    /**
+     * a Wrapper function to render an error Page.
+     * @param $message
+     * @param $errorStatusCode
+     * @param $layout
+     * @return string
+     */
+    public static function renderFullError($message, $errorStatusCode = null, $layout = null){
+        $controllerObject = new WebController();
+        return $controllerObject -> renderFullError($message, $errorStatusCode, $layout);
     }
 
 }

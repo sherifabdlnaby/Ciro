@@ -18,4 +18,4 @@ use App\Core\Route;
 */
 
 
-//Route::All('Account/{username}','Web', 'Account', 'View');
+//Route::All('Account/{username}','Web', '{username}', 'View');

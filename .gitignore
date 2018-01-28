@@ -4,3 +4,4 @@
 /Vendor/*
 !Vendor/composer
 !Vendor/autoload.php
+/exception_handler_log.log

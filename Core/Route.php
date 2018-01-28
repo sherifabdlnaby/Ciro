@@ -221,6 +221,6 @@ class Route
      * @return bool
      */
     private static function isRouteVar($part){
-        return count($part) > 1 && $part[0] === '{' && $part[strlen($part) - 1] === '}';
+        return strlen($part) > 1 && $part[0] === '{' && $part[strlen($part) - 1] === '}';
     }
 }
