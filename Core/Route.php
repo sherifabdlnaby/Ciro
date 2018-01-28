@@ -117,7 +117,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Get($uri, $route, $controller, $action)
+    public static function get($uri, $route, $controller, $action)
     {
         self::$GetRoutes[$uri] = array(
             'route' => $route,
@@ -132,7 +132,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Post($uri, $route, $controller, $action)
+    public static function post($uri, $route, $controller, $action)
     {
         self::$PostRoutes[$uri] = array(
             'route' => $route,
@@ -147,7 +147,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Put($uri, $route, $controller, $action)
+    public static function put($uri, $route, $controller, $action)
     {
         self::$PutRoutes[$uri] = array(
             'route' => $route,
@@ -162,7 +162,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Patch($uri, $route, $controller, $action)
+    public static function patch($uri, $route, $controller, $action)
     {
         self::$PatchRoutes[$uri] = array(
             'route' => $route,
@@ -177,7 +177,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Delete($uri, $route, $controller, $action)
+    public static function delete($uri, $route, $controller, $action)
     {
         self::$DeleteRoutes[$uri] = array(
             'route' => $route,
@@ -192,7 +192,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function Options($uri, $route, $controller, $action)
+    public static function options($uri, $route, $controller, $action)
     {
         self::$OptionsRoutes[$uri] = array(
             'route' => $route,
@@ -207,7 +207,7 @@ class Route
      * @param $controller
      * @param $action
      */
-    public static function All($uri, $route, $controller, $action)
+    public static function all($uri, $route, $controller, $action)
     {
         self::$AllRoutes[$uri] = array(
             'route' => $route,
