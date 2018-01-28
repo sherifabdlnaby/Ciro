@@ -19,11 +19,10 @@ Config::set('use_global_session', true);
 /* Handle Exceptions and Errors, optionally logs them, catch errors and throw them as an ErrorException.
    Also Prints a 500 : Internal Server error custom error page for the user. */
 Config::set('use_exception_handler', true);
-/* log exceptions and errors if exception handler is used  */
+/* Logs exceptions and errors if exception handler is used  */
 Config::set('log_exceptions_errors', true);
-/* Exception Handler log file destination to be used if logging exceptions & errors is enabled.
- (beware not to put log file in Webroot/ public directory, always use ROOT constant as a base) */
-Config::set('exception_handler_log_destination', ROOT.DS.'exception_handler_log.log');
+/* Exception Handler Logs file destination to be used if logging exceptions & errors is enabled. */
+Config::set('exception_handler_log_destination', LOG_PATH.DS.'exception_handler_log.log');
 /* Default layout used for views if no specific layout mentioned. */
 Config::set('default_layout', 'default');
 
