@@ -4,9 +4,7 @@ namespace App\Controllers\Web;
 use App\Core\WebController;
 
 /*
- * Class Name should match this pattern {Route Prefix}{Controller Name}Controller
- * route prefix for Web Controllers = "", so just use {Controller Name}Controller.
- * (unless you changed Web route prefix in config)
+ * Class Name should match this pattern {Controller Name}Controller
  */
 
 class HomeController extends WebController {

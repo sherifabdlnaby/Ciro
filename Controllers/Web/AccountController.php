@@ -7,9 +7,7 @@ use App\Models\RegisterService;
 use App\Models\UserRepository;
 
 /*
- * Class Name should match this pattern {Route Prefix}{Controller Name}Controller
- * route prefix for Web Controllers = "", so just use {Controller Name}Controller.
- * (unless you changed Web route prefix in config)
+ * Class Name should match this pattern {Controller Name}Controller
  */
 
 class AccountController extends WebController {
@@ -35,6 +33,12 @@ class AccountController extends WebController {
         }
         else{
             //GET REQUEST -> RENDER FORM
+            Session::addInfoAlert('Alert 1 for Information');
+            Session::addSuccessAlert('Alert for Success');
+            Session::addWarningAlert('Alert for Warning');
+            Session::addErrorAlert('Alert 1 for Error');
+            Session::addErrorAlert('Alert 2 for Error');
+            Session::addInfoAlert('Alert 2 for Information');
             return $this->render();
         }
     }

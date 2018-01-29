@@ -114,18 +114,18 @@ class WebController extends Controller
 
     /** Render Custom Full Error page and send the corresponding status if passed, and an optional layout.
      * @param $message
-     * @param null $errorStatusCode
+     * @param null $statusCode
      * @param null $layout
      * @return string
      */
-    function renderFullMessage($message, $errorStatusCode = null, $layout = null)
+    function renderFullMessage($message, $statusCode = null, $layout = null)
     {
         $this->data['message'] = $message;
         //Send response code via Header.
-        if (is_numeric($errorStatusCode)) {
-            http_response_code($errorStatusCode);
+        if (is_numeric($statusCode)) {
+            http_response_code($statusCode);
             //Construct Error Path.
-            $errorPath = MESSAGE_VIEW_PATH . DS . 'StatusCodeMessage' . DS . $errorStatusCode . '.html';
+            $errorPath = MESSAGE_VIEW_PATH . DS . 'StatusCodeMessage' . DS . $statusCode . '.html';
         } else
             //Construct Error Path.
             $errorPath = MESSAGE_VIEW_PATH . DS . 'message.html';

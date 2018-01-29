@@ -13,7 +13,7 @@ class App{
         //Create a router  object (constructor resolves uri)
         self::$router = new router($uri);
         //ClassName = RoutePrefix + Url Controller + 'Controller'
-        $bareClassName = self::$router->getRoutePrefix().self::$router->getController().'Controller';
+        $bareClassName = self::$router->getController().'Controller';
         //Add Name space to have a fully qualified Controller Class name.
         $controllerClass = '\\App\\Controllers\\'.self::$router -> getRoute().'\\'.$bareClassName;
         //Controller's Method to be called

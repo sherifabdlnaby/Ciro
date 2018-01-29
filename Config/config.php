@@ -36,12 +36,8 @@ Config::set('default_action', 'Index');
     Description:
     -   Controllers of the route should be included in the /Controllers/{Route Name} directory.
     -   Views of Route Controller should be included in the /Views/{Route Name}/{Controller}/ directory.
-    -   Controllers class name of a route should be pre-fixed with the route pre-fix value.
-        e.g ( Controllers of route X should have name : { X => prefix value}{Controller Name}Controller )
 */
 Config::set('routes', array(
-//  Route Name  |   Route Prefix
-    'Web'       => '',
-    'Api'       => 'API_',
-    'Admin'     => 'Admin_'
+    //  Route Name
+    'Web','Api', 'Admin'
 ));
