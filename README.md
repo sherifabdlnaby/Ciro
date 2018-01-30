@@ -73,7 +73,10 @@ also replace `Models/UserRepository.php` with `Models\.disabled.mongo.userreposi
 
  All configurable via the config files.
  
- ![homepage](https://user-images.githubusercontent.com/16992394/35495101-d3b9e9e6-04c7-11e8-8afd-dbae75cf8a1b.jpg)
+ 
+- Online preview for the Framework template project: https://ciro-framework.herokuapp.com
+
+![homepage](https://user-images.githubusercontent.com/16992394/35495101-d3b9e9e6-04c7-11e8-8afd-dbae75cf8a1b.jpg)
  
 ___________
 
