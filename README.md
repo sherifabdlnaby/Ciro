@@ -5,9 +5,29 @@
 Ciro is a MVC PHP Framework to kickstart your project rapidly, it's designed to be simple, modular, decoupled, extensible and lightweight to make it easier to build better and easily maintined PHP code.
 
 
-Out of the box Ciro comes with **namespaced PSR-4 MVC structure**, **Pretty Urls**, **Default Routes** & **Custom Routes**, **Views Layouts**, **Alerts**, **Custom Error Pages**, **Exceptions & Errors Handler** with logging, database helper classes for **Mysqli**, **PDO**, and **MongoDB**, and is using **composer's autoloading**, for Views Ciro comes with **Bootstrap 4**, **Jquery 3.2.1** and **Font Awesome 5**.
+Out of the box Ciro comes with :
+- **Namespaced PSR-4 MVC structure**
+- **Single Entry Point PHP App**
+- **Pretty Urls**
+- **Default Routes**
+- **Custom Routes**
+- **Views Layouts**
+- **Alerts & Flash Messages**
+- **Custom Error Pages**
+- **Exceptions & Errors Handler** with logging
+- Database helper classes for **Mysqli**, **PDO**, and **MongoDB**
+- **Composer's autoloading**
+- for **Views** Ciro comes with 
+    - **Bootstrap 4**
+    - **Jquery 3.2.1** 
+    - **Font Awesome 5**
+    
+    
+Ciro comes with a template extensible project with a simple authentication system to kickstart developing.
 
+Online preview for the Framework template project: https://ciro-framework.herokuapp.com
 
+---- 
 # Index
 
 - [Requirements](#requirements)
