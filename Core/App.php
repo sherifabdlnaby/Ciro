@@ -11,7 +11,7 @@ class App{
     public static function run(&$uri)
     {
         //Create a router  object (constructor resolves uri)
-        self::$router = new router($uri);
+        self::$router = new Router($uri);
         //ClassName = RoutePrefix + Url Controller + 'Controller'
         $bareClassName = self::$router->getController().'Controller';
         //Add Name space to have a fully qualified Controller Class name.
