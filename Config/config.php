@@ -20,7 +20,7 @@ Config::set('use_global_session', true);
    Also Prints a 500 : Internal Server error custom error page for the user. */
 Config::set('use_exception_handler', true);
 /* Logs exceptions and errors if exception handler is used  */
-Config::set('log_exceptions_errors', true);
+Config::set('log_exceptions_errors', false);
 /* Exception Handler Logs file destination to be used if logging exceptions & errors is enabled. */
 Config::set('exception_handler_log_destination', LOG_PATH.DS.'exception_handler_log.log');
 /* Default layout used for views if no specific layout mentioned. */

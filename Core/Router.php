@@ -5,7 +5,6 @@ namespace App\Core;
 class Router{
     protected $uri;             // Uri
     protected $route;           // Request route
-    protected $routePrefix;     // Request routePrefix
     protected $controller;      // Request controller
     protected $action;          // Request controller action
     protected $params;          // Request Parameters
@@ -40,7 +39,6 @@ class Router{
             ($customRouteAttributes = Route::CustomRouteMatch($path_parts) ) !== false)
         {
             $this -> route = $customRouteAttributes['route'];
-            $this -> routePrefix = $routes[$this->route];
             $this -> controller = $customRouteAttributes['controller'];
             $this -> action = $customRouteAttributes['action'];
             $this -> params = $customRouteAttributes['params'];
@@ -52,7 +50,6 @@ class Router{
 
         //Load Defaults
         $this -> route = Config::get('default_route');
-        $this -> routePrefix = $routes[$this->route];
         $this -> controller = Config::get('default_controller');
         $this -> action = Config::get('default_action');
 
@@ -60,12 +57,11 @@ class Router{
         {
             //Get Route from first part if exits
             $currentPart = current($path_parts);
-            foreach ($routes as $routeName => &$routePrefix)
+            foreach ($routes as $routeName)
             {
                 if(strcasecmp($routeName, $currentPart) === 0)
                 {
                     $this->route = $routeName;
-                    $this->routePrefix = $routePrefix;
                     array_shift($path_parts);
                     break;
                 }

@@ -33,12 +33,6 @@ class AccountController extends WebController {
         }
         else{
             //GET REQUEST -> RENDER FORM
-            Session::addInfoAlert('Alert 1 for Information');
-            Session::addSuccessAlert('Alert for Success');
-            Session::addWarningAlert('Alert for Warning');
-            Session::addErrorAlert('Alert 1 for Error');
-            Session::addErrorAlert('Alert 2 for Error');
-            Session::addInfoAlert('Alert 2 for Information');
             return $this->render();
         }
     }
