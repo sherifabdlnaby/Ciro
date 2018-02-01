@@ -2,23 +2,23 @@
 
 namespace App\Core;
 
-class Router{
+class Router
+{
     protected $uri;             // Uri
     protected $route;           // Request route
     protected $controller;      // Request controller
     protected $action;          // Request controller action
     protected $params;          // Request Parameters
-                                ///* in Custom routes $params are passed in method parameters and $params[] array();.
-                                ///* in Default routes $params are passed in controller's $params[] array();.
+    protected $isCustomRoute = false;           /// Indicate if Route is Custom or Default.
 
-    protected $isCustomRoute = false;   /// Indicate if Route is Custom or Default.
+
     /**
      * Router constructor.
      * @param $uri
      */
     public function __construct(&$uri)
     {
-        $this->uri = urldecode(trim($uri,'/'));
+        $this->uri = urldecode(trim($uri, '/'));
 
         //Parse
         $uri_parts = explode('?', $this->uri);
@@ -49,18 +49,15 @@ class Router{
         /* if reached here -> DEFAULT ROUTING */
 
         //Load Defaults
-        $this -> route = Config::get('default_route');
-        $this -> controller = Config::get('default_controller');
-        $this -> action = Config::get('default_action');
+        $this->route = Config::get('default_route');
+        $this->controller = Config::get('default_controller');
+        $this->action = Config::get('default_action');
 
-        if(count($path_parts))
-        {
+        if (count($path_parts)) {
             //Get Route from first part if exits
             $currentPart = current($path_parts);
-            foreach ($routes as $routeName)
-            {
-                if(strcasecmp($routeName, $currentPart) === 0)
-                {
+            foreach ($routes as $routeName) {
+                if (strcasecmp($routeName, $currentPart) === 0) {
                     $this->route = $routeName;
                     array_shift($path_parts);
                     break;
@@ -68,28 +65,20 @@ class Router{
             }
 
             //Get Controller
-            if(current($path_parts)){
+            if (current($path_parts)) {
                 $this->controller = current($path_parts);
                 array_shift($path_parts);
             }
 
             //Get Action
-            if( current($path_parts) ){
+            if (current($path_parts)) {
                 $this->action = current($path_parts);
                 array_shift($path_parts);
             }
 
             //Get Params
-            $this -> params = $path_parts;
+            $this->params = $path_parts;
         }
-    }
-
-    /**
-     * @param bool $isCustomRoute
-     */
-    public function setIsCustomRoute($isCustomRoute)
-    {
-        $this->isCustomRoute = $isCustomRoute;
     }
 
     /**
@@ -178,22 +167,6 @@ class Router{
     public function setRoute($route)
     {
         $this->route = $route;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRoutePrefix()
-    {
-        return $this->routePrefix;
-    }
-
-    /**
-     * @param string $routePrefix
-     */
-    public function setRoutePrefix($routePrefix)
-    {
-        $this->routePrefix = $routePrefix;
     }
 
 }

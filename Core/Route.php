@@ -16,27 +16,27 @@ class Route
      * match path parts with all registered custom routes according to REQUEST_METHOD
      * return parsed attributes if matched, false otherwise.
      * @param $path_parts (URI exploded by '/')
-     * @return false if not matched | routeAttributes array() if matched.
+     * @return false | array , false if not matched | routeAttributes array() if matched.
      */
     public static function CustomRouteMatch(&$path_parts)
     {
         $routeAttributes = false;
 
-        if($_SERVER['REQUEST_METHOD'] === 'GET')
+        if ($_SERVER['REQUEST_METHOD'] === 'GET')
             $routeAttributes = Route::routeMatch($path_parts, Route::$GetRoutes);
-        else if($_SERVER['REQUEST_METHOD'] === 'POST')
+        else if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $routeAttributes = Route::routeMatch($path_parts, Route::$PostRoutes);
-        else if($_SERVER['REQUEST_METHOD'] === 'PUT')
+        else if ($_SERVER['REQUEST_METHOD'] === 'PUT')
             $routeAttributes = Route::routeMatch($path_parts, Route::$PutRoutes);
-        else if($_SERVER['REQUEST_METHOD'] === 'PATCH')
+        else if ($_SERVER['REQUEST_METHOD'] === 'PATCH')
             $routeAttributes = Route::routeMatch($path_parts, Route::$PatchRoutes);
-        else if($_SERVER['REQUEST_METHOD'] === 'DELETE')
+        else if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
             $routeAttributes = Route::routeMatch($path_parts, Route::$DeleteRoutes);
-        else if($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
+        else if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
             $routeAttributes = Route::routeMatch($path_parts, Route::$OptionsRoutes);
 
         //If routeAttributes === false -> check $AllRoutes.
-        if($routeAttributes === false)
+        if ($routeAttributes === false)
             $routeAttributes = Route::routeMatch($path_parts, Route::$AllRoutes);
 
         return $routeAttributes;
@@ -46,7 +46,7 @@ class Route
      * match path parts with all registered custom routes, return parsed attributes if matched, false otherwise.
      * @param $path_parts (URI exploded by '/')
      * @param $routes
-     * @return false if not matched | routeAttributes array() if matched.
+     * @return false | mixed false if not matched | routeAttributes array() if matched.
      */
     private static function routeMatch(&$path_parts, &$routes)
     {
@@ -57,7 +57,7 @@ class Route
             $route_parts = explode('/', $route);
 
             //Escape this route if it is less than current path.
-            if(count($path_parts) > count($route_parts))
+            if (count($path_parts) > count($route_parts))
                 continue;
 
             //Start Matching
@@ -90,15 +90,16 @@ class Route
 
                 foreach ($route_parts as $i => &$part)
                 {
-                    if(self::isRouteVar($part) && $i < count($path_parts) )
-                        if($part === $routeAttributes['route'])
+                    if( self::isRouteVar($part) && $i < count($path_parts) ) {
+                        if ($part === $routeAttributes['route'])
                             $routeAttributes['route'] = $path_parts[$i];
                         elseif ($part === $routeAttributes['controller'])
                             $routeAttributes['controller'] = $path_parts[$i];
                         elseif ($part === $routeAttributes['action'])
                             $routeAttributes['action'] = $path_parts[$i];
                         else
-                            array_push($params,  $path_parts[$i]);
+                            array_push($params, $path_parts[$i]);
+                    }
                 }
 
                 //Add Params
@@ -220,7 +221,8 @@ class Route
      * @param $part
      * @return bool
      */
-    private static function isRouteVar($part){
+    private static function isRouteVar($part)
+    {
         return strlen($part) > 1 && $part[0] === '{' && $part[strlen($part) - 1] === '}';
     }
 }
