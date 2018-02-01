@@ -10,7 +10,6 @@ class LoginService{
      * @param $password
      * @return bool
      */
-    //TODO Handle how to cleanly send error messages to form and VALIDATE form.
     public static function login($username, $password)
     {
         //Validate not empty
@@ -27,7 +26,6 @@ class LoginService{
             Session::saveLoginSession($resultUser->_id, $resultUser->username);
             return true;
         }
-
 
         Session::addErrorAlert('Username or Password are incorrect');
 

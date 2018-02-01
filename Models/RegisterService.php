@@ -13,7 +13,6 @@ class RegisterService{
      * @param $email
      * @return bool
      */
-    //TODO Handle how to cleanly send error messages to form and VALIDATE form.
     public static function Register($name, $username, $password, $confirmPassword, $email)
     {
         $userRepository = new UserRepository();
