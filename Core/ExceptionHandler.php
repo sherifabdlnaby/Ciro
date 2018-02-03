@@ -23,14 +23,8 @@ class ExceptionHandler
         if (Config::get('log_exceptions_errors') == true)
             self::logException($exception);
 
-        //Use App::renderFullError to render an Internal Server custom error page.
-        $renderFullErrorOutput = App::renderFullError('500 Internal Server Error', 500);
-
-        //Print out custom error page to user.
-        echo $renderFullErrorOutput;
-
         //Throw Exception again to show details for Developer if error reporting is ON. also will stop script execution.
-        throw new \Exception('', null, $exception);
+        throw $exception;
     }
 
     /**
