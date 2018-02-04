@@ -16,8 +16,7 @@ Config::set('use_mongo_db', true);
 Config::set('use_custom_routes', true);
 /* Start Session at start of every script. */
 Config::set('use_global_session', true);
-/* Handle Exceptions and Errors, optionally logs them, catch errors and throw them as an ErrorException.
-   Also Prints a 500 : Internal Server error custom error page for the user. */
+/* Handle Exceptions and Errors */
 Config::set('use_exception_handler', true);
 /* Logs exceptions and errors if exception handler is used  */
 Config::set('log_exceptions_errors', false);
