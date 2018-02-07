@@ -67,14 +67,10 @@ class DBPdo
         // Connect to the database
         $connection = self::getConnection();
 
-        // Query the database
-        $PDOStatement = $connection -> query($query);
+        // Prepare Query
+        $PDOStatement = $connection -> prepare($query);
 
-        if(is_array($bindValues))
-            return $PDOStatement -> execute($bindValues) ? $PDOStatement : false;
-        else
-            return $PDOStatement -> execute() ? $PDOStatement : false;
-
+        return $PDOStatement -> execute($bindValues) ? $PDOStatement : false;
     }
 
     /**
