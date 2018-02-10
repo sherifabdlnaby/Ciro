@@ -6,9 +6,9 @@ Ciro is a MVC PHP Framework to kickstart your project rapidly, it's designed to 
 
 
 Out of the box Ciro comes with :
-- **Namespaced PSR-4 MVC structure**
+- **Namespaced PSR-4 structure**
 - **Single Entry Point PHP App**
-- **Pretty Urls**
+- **Pretty Urls Support**
 - **Default Routes**
 - **Custom Routes**
 - **Views Layouts**
@@ -17,13 +17,13 @@ Out of the box Ciro comes with :
 - **Exceptions & Errors Handler** with logging
 - Database helper classes for **Mysqli**, **PDO**, and **MongoDB**
 - **Composer's autoloading**
-- for **Views** Ciro comes with 
+- for **Views**, default template comes with 
     - **Bootstrap 4**
     - **Jquery 3.2.1** 
     - **Font Awesome 5**
     
     
-Ciro comes with a template extensible project with a simple authentication system to kickstart developing.
+Ciro comes with a template project with a simple authentication system to kickstart developing for you project or prototype.
 
 Online preview for the Framework template project: https://ciro-framework.herokuapp.com
 
@@ -228,7 +228,6 @@ ___________
     
     
     
-    
 ## 3- Controllers
 
 - Controller are responsible for processing users requests and returning the output for the user either as a HTML for `WebControllers`, or JsonResult for `ApiControllers`, or redirect to another destination.
@@ -310,6 +309,8 @@ class AccountController extends WebController {
     }
 }
 ```
+
+> if any exception was raised during script execution the framework will render a 500 Internal Server Error custom error page.
 
 #### 3. redirect()
 
@@ -494,7 +495,6 @@ ___________
 ## 6- Exception and Error Handler
 - Exception & Error Handler can be Enabled/Disabled in **`Config/config.php`**.
 - Exception & Error handler will convert any error to an ErrorException.
-- Catch any uncaught exception, and renders a `500: Internal Server Error` custom error page if an exception or an error occurred during script execution, this will avoid showing a blank white screen for users.
 - If Enabled in configurations, Exception Handler will log any uncaught exceptions or errors.
 - Logs file directory is specified in configurations too.
 
