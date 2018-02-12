@@ -2,7 +2,7 @@
 ![header](https://user-images.githubusercontent.com/16992394/35495122-0022aab8-04c8-11e8-8d3c-410aafd331d3.jpg)
 
 # Ciro PHP Framework
-Ciro is a MVC PHP Framework to kickstart your project rapidly, it's designed to be simple, modular, decoupled, extensible and lightweight to make it easier to build better and easily maintined PHP code.
+Ciro is a MVC PHP Framework to kickstart projects rapidly, it's designed to be simple, configurable, modular, decoupled, extensible and lightweight to make it easier to build better and easily maintained PHP code.
 
 
 Out of the box Ciro comes with :
@@ -25,7 +25,7 @@ Out of the box Ciro comes with :
     
 Ciro comes with a template project with a simple authentication system to kickstart developing for you project or prototype.
 
-Online preview for the Framework template project: https://ciro-framework.herokuapp.com
+Online example of the framework template project: https://ciro-framework.herokuapp.com
 
 ---- 
 # Index
@@ -74,7 +74,7 @@ also replace `Models/UserRepository.php` with `Models\.disabled.mongo.userreposi
  All configurable via the config files.
  
  
-- Online preview for the Framework template project: https://ciro-framework.herokuapp.com
+- Online preview of the framework template project: https://ciro-framework.herokuapp.com
 
 ![homepage](https://user-images.githubusercontent.com/16992394/35495101-d3b9e9e6-04c7-11e8-8afd-dbae75cf8a1b.jpg)
  
