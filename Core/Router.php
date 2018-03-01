@@ -79,6 +79,11 @@ class Router
             //Get Params
             $this->params = $path_parts;
         }
+
+        //normalize route/controller/action to the expected case
+        $this->route =      ucfirst(strtolower($this->route));
+        $this->controller = ucfirst(strtolower($this->controller));
+        $this->action =     ucfirst(strtolower($this->action));
     }
 
     /**

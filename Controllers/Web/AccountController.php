@@ -12,11 +12,11 @@ use App\Models\UserRepository;
 
 class AccountController extends WebController {
 
-    public function index(){
+    public function Index(){
         return $this->renderFullError('Not Found', 404);
     }
 
-    public function login(){
+    public function Login(){
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //LOGIN
             if(LoginService::login($_POST['username'], $_POST['password']))
@@ -37,7 +37,7 @@ class AccountController extends WebController {
         }
     }
 
-    public function register(){
+    public function Register(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (RegisterService::Register($_POST['name'], $_POST['username'], $_POST['password'], $_POST['confirmPassword'], $_POST['email']))
                 return $this->redirect('/');
@@ -49,14 +49,14 @@ class AccountController extends WebController {
         return $this->render();
     }
 
-    public function logout(){
+    public function Logout(){
         Session::destroyLoginSession();
         if(!empty($_GET['returnUrl']))
             return $this->redirect($_GET['returnUrl']);
         return $this->redirect('/');
     }
 
-    public function view($username){
+    public function View($username){
 
         $userRepository = new UserRepository();
 
