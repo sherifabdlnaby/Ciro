@@ -29,7 +29,7 @@ class View{
         $router = App::getRouter();
         $controllerDir = $router -> getRoute().DS.$router -> getController();
         $templateName = $router -> getAction().'.html';
-        return VIEW_PATH.DS.$controllerDir.DS.$templateName;
+        return $controllerDir.DS.$templateName;
     }
 
     public function render(){

@@ -39,6 +39,9 @@ class WebController extends Controller
         if (!$viewPath)
             $viewPath = View::getDefaultViewPath();
 
+        //Relative to full path.
+        $viewPath = VIEW_PATH . DS . $viewPath;
+
         //If no specific $data is not passed, use Controller's $this -> data instead
         if (!$data)
             $data = $this->data;
@@ -49,26 +52,26 @@ class WebController extends Controller
 
 
         //Layout Paths
-        $layoutPath = LAYOUT_VIEW_PATH . DS . $layout . DS . 'layout.html';
+        $layoutPath =       LAYOUT_VIEW_PATH . DS . $layout . DS . 'layout.html';
         $layoutHeaderPath = LAYOUT_VIEW_PATH . DS . $layout . DS . 'header.html';
         $layoutFooterPath = LAYOUT_VIEW_PATH . DS . $layout . DS . 'footer.html';
-        $layoutMetaPath = LAYOUT_VIEW_PATH . DS . $layout . DS . 'meta.html';
-        $layoutAlertsDir = LAYOUT_VIEW_PATH . DS . $layout . DS . 'alerts';
+        $layoutMetaPath =   LAYOUT_VIEW_PATH . DS . $layout . DS . 'meta.html';
+        $layoutAlertsDir =  LAYOUT_VIEW_PATH . DS . $layout . DS . 'alerts';
 
         //A dummy Var to be passed to views that doesn't use controller's data (as View's $data is passed by reference for optimization)
         $dummyVar = null;
 
         //Create Header / Footer / Meta / Body Views Instances
-        $bodyObj = new View($data, $viewPath);
-        $headerObj = new View($dummyVar, $layoutHeaderPath);
-        $footerObj = new View($dummyVar, $layoutFooterPath);
-        $metaObj = new View($dummyVar, $layoutMetaPath, $meta);
+        $bodyObj    = new View($data, $viewPath);
+        $headerObj  = new View($dummyVar, $layoutHeaderPath);
+        $footerObj  = new View($dummyVar, $layoutFooterPath);
+        $metaObj    = new View($dummyVar, $layoutMetaPath, $meta);
 
         //Do The Render
         $content = $bodyObj->render();
-        $header = $headerObj->render();
-        $footer = $footerObj->render();
-        $meta = $metaObj->render();
+        $header  = $headerObj->render();
+        $footer  = $footerObj->render();
+        $meta    = $metaObj->render();
 
         //Render Alerts if exits
         $alerts = "";
