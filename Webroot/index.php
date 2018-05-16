@@ -11,7 +11,7 @@ define('VIEW_PATH',     ROOT.DS.'Views');
 define('LOG_PATH',      ROOT.DS.'Logs');
 define('CONTROLLER_PATH',   ROOT.DS.'Controllers');
 define('LAYOUT_VIEW_PATH',  VIEW_PATH.DS.'_Layouts');
-define('MESSAGE_VIEW_PATH', VIEW_PATH.DS.'_FullMessages');
+define('MESSAGE_VIEW_PATH', '_FullMessages');
 
 //INITIALIZE
 require_once(CORE_PATH.DS.'init.php');
